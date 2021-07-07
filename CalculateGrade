@@ -1,0 +1,68 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int Unitmark();
+
+struct components {
+    int assignments;
+    int unitfinals;
+    int finals;
+} english, physics, calculus;
+
+int main()
+{
+    char course;
+    int unitmark;
+    printf("Type in the course grade you want to calculate: E -> English; P -> Physics; C -> Calculus.\n");
+        scanf("%c", &course);
+        switch (course) {
+        case 'E':
+            printf("Calculating grade for: English\n");
+            Unitmark();
+            break;
+        case 'P':
+            printf("Calculating grade for: Physics\n");
+            Unitmark();
+            break;
+        case 'C':
+            printf("Calculating grade for: Calculus\n");
+            Unitmark();
+            break;
+        default:
+            printf("Course not found.");
+            break;
+        }
+    return 0;
+}
+
+int Unitmark() {
+    int noAssignments;
+    int Assignmentgrade[10];
+    int Assignmentaverage;
+    int Assignmentweight;
+    int finalcoursework;
+    int i;
+    printf("Type in the number of assignments you have completed.\n");
+        scanf("%d", &noAssignments);
+    printf("Type in the grades you have received for each assignment.\n");
+        for(i = 0; i < noAssignments; i++) {
+            printf("%d. ", i+1);
+            scanf("%d", &Assignmentgrade[i]);
+        }
+        for(i = 0; i < noAssignments; i++) {
+            Assignmentaverage += Assignmentgrade [i];
+        }
+        finalcoursework = Assignmentaverage / noAssignments;
+    Assignmentweight = finalcoursework * 0.3;
+
+    int unitfinal;
+    int unitweight;
+    printf("Type your unit final mark for this unit.\n");
+        scanf("%d", &unitfinal);
+    unitweight = unitfinal * 0.7;
+
+    int Unit;
+    Unit = Assignmentweight + unitweight;
+    printf("Your mark for this unit is: %d", Unit);
+
+}
