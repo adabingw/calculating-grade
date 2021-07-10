@@ -1,68 +1,60 @@
-#include <stdio.h>
-#include <stdlib.h>
+import java.util.Scanner;
 
-int Unitmark();
+public class Calculator {
+	
+	@SuppressWarnings({ "resource" })
+	int UnitGradeCalc() {
+		int NumberofAssignments;
+		int AssignmentTotal = 0;
+		int AssignmentAverage;
+		double UnitCourseMark;
+		Scanner sc=new Scanner(System.in);
+		System.out.print("How many assignments do you wish to report?");
+		NumberofAssignments = sc.nextInt();
+		int[] AssignmentGrade = new int[NumberofAssignments];
+		System.out.println("Type in the marks for each assignment:");
+		for(int i = 0; i < NumberofAssignments; i++)  {
+			System.out.print(i+1 + ".");
+			AssignmentGrade[i]=sc.nextInt();  
+		}
+	    for(int i = 0; i < NumberofAssignments; i++) {
+	        AssignmentTotal += AssignmentGrade[i];
+	    }
+	    AssignmentAverage = AssignmentTotal / NumberofAssignments;
+	    UnitCourseMark = (AssignmentAverage * 0.7);
+	    
+	    int UnitFinal;
+	    double UnitFinalWeight;
+	    System.out.println("Type your unit final mark for this unit.\n");
+			Scanner sc1=new Scanner(System.in);
+			UnitFinal = sc1.nextInt();	    
+		UnitFinalWeight = (UnitFinal * 0.3);
 
-struct components {
-    int assignments;
-    int unitfinals;
-    int finals;
-} english, physics, calculus;
-
-int main()
-{
-    char course;
-    int unitmark;
-    printf("Type in the course grade you want to calculate: E -> English; P -> Physics; C -> Calculus.\n");
-        scanf("%c", &course);
-        switch (course) {
-        case 'E':
-            printf("Calculating grade for: English\n");
-            Unitmark();
-            break;
-        case 'P':
-            printf("Calculating grade for: Physics\n");
-            Unitmark();
-            break;
-        case 'C':
-            printf("Calculating grade for: Calculus\n");
-            Unitmark();
-            break;
-        default:
-            printf("Course not found.");
-            break;
-        }
-    return 0;
-}
-
-int Unitmark() {
-    int noAssignments;
-    int Assignmentgrade[10];
-    int Assignmentaverage;
-    int Assignmentweight;
-    int finalcoursework;
-    int i;
-    printf("Type in the number of assignments you have completed.\n");
-        scanf("%d", &noAssignments);
-    printf("Type in the grades you have received for each assignment.\n");
-        for(i = 0; i < noAssignments; i++) {
-            printf("%d. ", i+1);
-            scanf("%d", &Assignmentgrade[i]);
-        }
-        for(i = 0; i < noAssignments; i++) {
-            Assignmentaverage += Assignmentgrade [i];
-        }
-        finalcoursework = Assignmentaverage / noAssignments;
-    Assignmentweight = finalcoursework * 0.3;
-
-    int unitfinal;
-    int unitweight;
-    printf("Type your unit final mark for this unit.\n");
-        scanf("%d", &unitfinal);
-    unitweight = unitfinal * 0.7;
-
-    int Unit;
-    Unit = Assignmentweight + unitweight;
-    printf("Your mark for this unit is: %d", Unit);
-
+	    double UnitMark;
+	    UnitMark = UnitCourseMark + UnitFinalWeight;
+	    System.out.println("Your mark for this unit is: " + UnitMark);
+		return (int) UnitMark;
+	}
+	
+	int NumberofUnits;	
+	@SuppressWarnings("resource")
+	int AskNumberofUnits () {
+		Scanner sc2 = new Scanner(System.in);
+		System.out.print("How many units are in your course?");
+		NumberofUnits = sc2.nextInt();
+		return NumberofUnits;
+	}
+	
+	@SuppressWarnings({ "resource" })
+	int CourseGradeCalc(int units) {
+		Scanner sc3 = new Scanner(System.in);
+		System.out.println("Type in the weighting for each unit:");
+		int[] UnitWeighting = new int[units];
+		for(int i = 0; i < units; i++)  {
+			System.out.print(i+1 + ".");
+			UnitWeighting[i] = sc3.nextInt();  
+		}
+		return UnitWeighting[units];
+	}
+	
 }
