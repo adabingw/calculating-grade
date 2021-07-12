@@ -6,8 +6,13 @@ public class MainCalc {
 		int NUnits = C.AskNumberofUnits();
 		int UnitW = C.CourseGradeCalc(NUnits);
 		int[] unitweighted = new int[NUnits];
-		for (int i = 0; i < C.NumberofUnits; i++) {
-			unitweighted[i] = C.UnitGradeCalc() * C.UnitWeighting[i];
+		for (int i = 0; i < NUnits; i++) {
+			double unitweight;
+			System.out.print("For unit " + (i + 1) + ": \n");
+			Scanner sc3 = new Scanner(System.in);
+			System.out.print("Type in the weighting of this unit(in decimals): ");
+			unitweight = sc3.nextDouble();
+			unitweighted[i] = (int) (C.UnitGradeCalc() * unitweight);
 		}
 		int sum = IntStream.of(unitweighted).sum();
 		System.out.print("The final mark for this course is: " + sum);
