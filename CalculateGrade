@@ -36,25 +36,13 @@ public class Calculator {
 		return (int) UnitMark;
 	}
 	
-	int NumberofUnits;	
 	@SuppressWarnings("resource")
 	int AskNumberofUnits () {
+		int NumberofUnits;	
 		Scanner sc2 = new Scanner(System.in);
 		System.out.print("How many units are in your course?");
 		NumberofUnits = sc2.nextInt();
 		return NumberofUnits;
-	}
-	
-	@SuppressWarnings({ "resource" })
-	int CourseGradeCalc(int units) {
-		Scanner sc3 = new Scanner(System.in);
-		System.out.println("Type in the weighting for each unit:");
-		int[] UnitWeighting = new int[units];
-		for(int i = 0; i < units; i++)  {
-			System.out.print(i+1 + ".");
-			UnitWeighting[i] = sc3.nextInt();  
-		}
-		return UnitWeighting[units];
 	}
 	
 }
