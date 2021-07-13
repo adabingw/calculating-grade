@@ -2,20 +2,17 @@ import java.util.stream.IntStream;
 
 public class MainCalc {
 	public static void main (String[] args) {
-		Calculator C = new Calculator();
-		int NUnits = C.AskNumberofUnits();
-		int UnitW = C.CourseGradeCalc(NUnits);
-		int[] unitweighted = new int[NUnits];
+		QuestionPane Q = new QuestionPane();
+		int NUnits = Q.AskUnits(); 
+		System.out.println("Number of Units: " + NUnits); // system check
+		int[] unitweighted = new int[NUnits]; 
 		for (int i = 0; i < NUnits; i++) {
-			double unitweight;
-			System.out.print("For unit " + (i + 1) + ": \n");
-			Scanner sc3 = new Scanner(System.in);
-			System.out.print("Type in the weighting of this unit(in decimals): ");
-			unitweight = sc3.nextDouble();
-			unitweighted[i] = (int) (C.UnitGradeCalc() * unitweight);
+			double Weight = Q.Unitw(i+1); 
+			int NumberofAssignments = Q.AskAssign(); 
+			int AssignmentAvg = Q.InputAssign(NumberofAssignments);
+			unitweighted[i] = (int) ((AssignmentAvg + Q.InputUnitFinal()) * Weight);
 		}
-		int sum = IntStream.of(unitweighted).sum();
+ 		int sum = IntStream.of(unitweighted).sum();
 		System.out.print("The final mark for this course is: " + sum);
 	}
 }
-
