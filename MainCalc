@@ -1,4 +1,5 @@
 import java.util.stream.IntStream;
+import javax.swing.JOptionPane;
 
 public class MainCalc {
 	public static void main (String[] args) {
@@ -13,6 +14,7 @@ public class MainCalc {
 			unitweighted[i] = (int) ((AssignmentAvg + Q.InputUnitFinal()) * Weight);
 		}
  		int sum = IntStream.of(unitweighted).sum();
-		System.out.print("The final mark for this course is: " + sum);
+		System.out.print("The final mark for this course is: " + sum); // system check
+		JOptionPane.showMessageDialog(null, "The final mark for this course is: " + sum);
 	}
 }
