@@ -1,5 +1,9 @@
 import java.util.Scanner;
 
+// this class does not require a user input interface;
+// it is an alternative program that can be combined with the MainCalc class without the Question Panes;
+// however, it is not required for the execution of MainCalc with the QuestionPane;
+
 public class Calculator {
 	
 	@SuppressWarnings({ "resource" })
