@@ -1,10 +1,5 @@
 import java.util.stream.IntStream;
-
 import javax.swing.JOptionPane;
-
-// this is a user input interface class;
-// it can run separately with the MainCalc class without using the Calculator class;
-// the Calculator class can subsequently run with the MainCalc class without this class;
 
 public class QuestionPane {
 
@@ -12,40 +7,40 @@ public class QuestionPane {
 		String NumberUnits = JOptionPane.showInputDialog(null, "How many units are in this course?");
 		if (NumberUnits != null) {
 		    try {
-		    	   int NumberofUnits = Integer.parseInt(NumberUnits); 
-					if (NumberofUnits < 0 || NumberofUnits > 100) {
-			    	    JOptionPane.showMessageDialog(null, "Input out of bounds",
+		    	int NumberofUnits = Integer.parseInt(NumberUnits); 
+			if (NumberofUnits < 0 || NumberofUnits > 100) {
+			    JOptionPane.showMessageDialog(null, "Input out of bounds",
 			    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
-			    	    System.exit(0);
-					}
-				    return NumberofUnits;
-		    	 } catch(NumberFormatException e) {
-		    	    JOptionPane.showMessageDialog(null, "Input is not a number",
+			    System.exit(0);
+			}
+			return NumberofUnits;
+		     } catch(NumberFormatException e) {
+		    	   JOptionPane.showMessageDialog(null, "Input is not a number",
 		    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
-		    	    System.exit(0);
-		    	 } 
-		} else System.exit(0);
+		    	   System.exit(0);
+		    	} 
+		} else { System.exit(0); }
 		 return 0; 
 	} // all clear
 	
 	public double Unitw(int UnitNo) {
-			String UnitwLOL = JOptionPane.showInputDialog(null, "For unit " + UnitNo + ", please type in the weighting (in decimal form): ");
-			if (UnitwLOL != null) {
-			    try {
-				    	double UnitWeightLOL = Double.parseDouble(UnitwLOL);
-						System.out.println("Unit weight is " + UnitWeightLOL); // system check
-						if (UnitWeightLOL < 0 || UnitWeightLOL > 100) {
-				    	    JOptionPane.showMessageDialog(null, "Input out of bounds",
+		String UnitwLOL = JOptionPane.showInputDialog(null, "For unit " + UnitNo + ", please type in the weighting (in decimal form): ");
+		if (UnitwLOL != null) {
+		    try {
+		    	double UnitWeightLOL = Double.parseDouble(UnitwLOL);
+			System.out.println("Unit weight is " + UnitWeightLOL); // system check
+			if (UnitWeightLOL < 0 || UnitWeightLOL > 100) {
+		    	    JOptionPane.showMessageDialog(null, "Input out of bounds",
 				    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
-				    	    System.exit(0);
-						}
-					    return UnitWeightLOL;
-			    	 } catch(NumberFormatException e) {
-			    	    JOptionPane.showMessageDialog(null, "Input is not a number",
+		    	    System.exit(0);
+			}
+			return UnitWeightLOL;
+		     } catch(NumberFormatException e) {
+			     JOptionPane.showMessageDialog(null, "Input is not a number",
 			    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
-			    	    System.exit(0);
-			    	 } 
-			} else System.exit(0);
+			     System.exit(0);
+		        } 
+		 }  else { System.exit(0); }
 		 return 0;
 	} // all clear
 	
@@ -54,20 +49,20 @@ public class QuestionPane {
 		if (NoAssign != null) {
 		    try {
 		    	   int AssignNo = Integer.parseInt(NoAssign); 
-				    System.out.println("Number of Assignments: " + AssignNo); // system check
-					if (AssignNo < 0 || AssignNo > 100) {
+			   System.out.println("Number of Assignments: " + AssignNo); // system check
+			   if (AssignNo < 0 || AssignNo > 100) {
 			    	    JOptionPane.showMessageDialog(null, "Input out of bounds",
 			    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
 			    	    System.exit(0);
-					}
-				    return AssignNo;
-		    	 } catch(NumberFormatException e) {
+			   }
+			   return AssignNo;
+		    } catch(NumberFormatException e) {
 		    	   System.out.println("input is not an int value"); 
-		    	    JOptionPane.showMessageDialog(null, "Input is not a number",
+		           JOptionPane.showMessageDialog(null, "Input is not a number",
 		    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
-		    	    System.exit(0);
-		    	 } 
-		} else System.exit(0);  
+		    	   System.exit(0);
+		    } 
+		} else { System.exit(0); } 
 		return 0;
 	} // all clear
 	
@@ -103,16 +98,16 @@ public class QuestionPane {
 		    try {
 			    int UnitFinale = Integer.parseInt(UnitF);
 			    System.out.println("Unit final: " + UnitFinale); // system check
-				if (UnitFinale < 0 || UnitFinale > 100) {
+			    if (UnitFinale < 0 || UnitFinale > 100) {
 			    	    JOptionPane.showMessageDialog(null, "Input out of bounds",
-			    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
-			    	    System.exit(0);
-				}
+			    	        "ERROR", JOptionPane.ERROR_MESSAGE);
+			            System.exit(0);
+			    }
 			    int UnitFinaleW = (int) (UnitFinale * 0.3);
 		  	    return UnitFinaleW;			    	 
 		    } catch(NumberFormatException e) {
 	  	            JOptionPane.showMessageDialog(null, "Input is not a number",
-			    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
+			       	      "ERROR", JOptionPane.ERROR_MESSAGE);
 			    System.exit(0);
 		    } 
 		} else System.exit(0);
