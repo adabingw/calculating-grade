@@ -85,7 +85,7 @@ public class QuestionPane {
 			    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
 			System.exit(0);
 			}
-			} else System.exit(0);
+			} else { System.exit(0); }
 		}
  		int sum = IntStream.of(AssignmentsLOL).sum();
  		int average = (int) ((sum / Assign) * 0.7);
@@ -110,7 +110,7 @@ public class QuestionPane {
 			       	      "ERROR", JOptionPane.ERROR_MESSAGE);
 			    System.exit(0);
 		    } 
-		} else System.exit(0);
+		} else { System.exit(0); }
 		return 0;
 	}
 	
