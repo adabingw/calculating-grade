@@ -67,16 +67,20 @@ public class QuestionPane {
 		return 0;
 	} // all clear
 	
-	public int InputAssign(int Assign) {
+	public int[] InputAssign(int Assign) {
 		System.out.println("Assign is " + Assign); // system check
 		String[] Assignments = new String[Assign]; 
 		int[] AssignmentsLOL = new int[Assign]; 
+				
 		for (int i = 0; i < Assign; i++) {
 			System.out.println("For Assignment " + (i+1)); // system check
-			Assignments[i] = JOptionPane.showInputDialog(null, "Mark of Assignment "+ (i+1));
+			Assignments[i] = JOptionPane.showInputDialog(null, "Mark of Assignment "+ (i+1));			
+			
 			if (Assignments[i] != null) {
-			    try {
+			    
+				try {
 					AssignmentsLOL[i] = Integer.parseInt(Assignments[i]);
+					
 				    System.out.println("Assignment mark is " + AssignmentsLOL[i]); // system check
 					if (AssignmentsLOL[i] < 0 || AssignmentsLOL[i] > 100) {
 				    	    JOptionPane.showMessageDialog(null, "Input out of bounds",
@@ -91,9 +95,7 @@ public class QuestionPane {
 			    	 }
 				} else System.exit(0);
 		}
- 		int sum = IntStream.of(AssignmentsLOL).sum();
- 		int average = (int) ((sum / Assign) * 0.7);
- 		return average;
+		return AssignmentsLOL;
 	}
 	
 	public int InputUnitFinal() {
