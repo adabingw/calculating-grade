@@ -1,0 +1,20 @@
+CREATE DATABASE grades;
+
+SHOW DATABASES;
+
+USE grades;
+
+CREATE TABLE unit (
+  unit_no int NOT NULL,
+  unit_w int NOT NULL,
+  unit_final int NOT NULL,
+  unit_mark int NOT NULL,
+  PRIMARY KEY (unit_no)
+  );
+
+CREATE TABLE assignments (
+  assign_no int NOT NULL,
+  unit_no int NOT NULL,
+  assign_mark int NOT NULL,
+  PRIMARY KEY (assign_no, unit_no)
+  );
