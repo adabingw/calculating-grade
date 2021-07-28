@@ -1,11 +1,9 @@
-import java.util.stream.IntStream;
-
 import javax.swing.JOptionPane;
 
-public class QuestionPane {
+public class qForUnits {
 
-	public int AskUnits() {
-		String NumberUnits = JOptionPane.showInputDialog(null, "How many units are in this course?");
+	public int AskUnits(String courseName) {
+		String NumberUnits = JOptionPane.showInputDialog(null, "How many units are in this course?", courseName, JOptionPane.INFORMATION_MESSAGE);
 		if (NumberUnits != null) {
 		    try {
 		    	   int NumberofUnits = Integer.parseInt(NumberUnits); 
@@ -20,16 +18,16 @@ public class QuestionPane {
 		    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
 		    	    System.exit(0);
 		    	 } 
-		} else System.exit(0);
-		 return 0; 
+		} else 	System.exit(0);
+		return 0; 
 	} // all clear
 	
-	public double Unitw(int UnitNo) {
-			String UnitwLOL = JOptionPane.showInputDialog(null, "For unit " + UnitNo + ", please type in the weighting (in decimal form): ");
+	public int Unitw(int UnitNo, String courseName) {
+			String UnitwLOL = JOptionPane.showInputDialog(null, "For unit " + UnitNo + ", please type in the weighting (discard the percent sign): ", courseName, JOptionPane.INFORMATION_MESSAGE);
 			if (UnitwLOL != null) {
 			    try {
-				    	double UnitWeightLOL = Double.parseDouble(UnitwLOL);
-						System.out.println("Unit weight is " + UnitWeightLOL); // system check
+				    	int UnitWeightLOL = Integer.parseInt(UnitwLOL);
+						System.out.println("Unit weight is " + UnitWeightLOL + "%"); // system check
 						if (UnitWeightLOL < 0 || UnitWeightLOL > 100) {
 				    	    JOptionPane.showMessageDialog(null, "Input out of bounds",
 				    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -41,12 +39,13 @@ public class QuestionPane {
 			    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
 			    	    System.exit(0);
 			    	 } 
-			} else System.exit(0);
+			} else 	System.exit(0);
 		 return 0;
+			
 	} // all clear
 	
-	public int AskAssign() {
-		String NoAssign = JOptionPane.showInputDialog(null, "How many assignments are in this unit?");
+	public int AskAssign(int UnitNo, String courseName) {
+		String NoAssign = JOptionPane.showInputDialog(null, "How many assignments are in this unit?", courseName + " Unit " + UnitNo, JOptionPane.INFORMATION_MESSAGE);
 		if (NoAssign != null) {
 		    try {
 		    	   int AssignNo = Integer.parseInt(NoAssign); 
@@ -67,14 +66,14 @@ public class QuestionPane {
 		return 0;
 	} // all clear
 	
-	public int[] InputAssign(int Assign) {
+	public int[] InputAssign(int Assign, int UnitNo, String courseName) {
 		System.out.println("Assign is " + Assign); // system check
 		String[] Assignments = new String[Assign]; 
 		int[] AssignmentsLOL = new int[Assign]; 
 				
 		for (int i = 0; i < Assign; i++) {
 			System.out.println("For Assignment " + (i+1)); // system check
-			Assignments[i] = JOptionPane.showInputDialog(null, "Mark of Assignment "+ (i+1));			
+			Assignments[i] = JOptionPane.showInputDialog(null, "Mark of Assignment "+ (i+1), courseName + " Unit " + UnitNo, JOptionPane.INFORMATION_MESSAGE);			
 			
 			if (Assignments[i] != null) {
 			    
@@ -98,8 +97,8 @@ public class QuestionPane {
 		return AssignmentsLOL;
 	}
 	
-	public int InputUnitFinal() {
-			String UnitF = JOptionPane.showInputDialog(null, "Input your unit final mark: ");
+	public int InputUnitFinal(int UnitNo, String courseName) {
+			String UnitF = JOptionPane.showInputDialog(null, "Input your unit final mark: ", courseName + " Unit " + UnitNo, JOptionPane.INFORMATION_MESSAGE);
 			if (UnitF != null) {				
 			    try {
 				    int UnitFinale = Integer.parseInt(UnitF);
@@ -109,8 +108,7 @@ public class QuestionPane {
 				    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
 				    	    System.exit(0);
 						}
-				    int UnitFinaleW = (int) (UnitFinale * 0.3);
-					return UnitFinaleW;			    	 
+					return UnitFinale;			    	 
 				} catch(NumberFormatException e) {
 			        JOptionPane.showMessageDialog(null, "Input is not a number",
 			    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
