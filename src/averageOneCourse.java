@@ -57,7 +57,7 @@ public class averageOneCourse {
 				statement1.setInt(2, i + 100);
 
 				for (int j = 0; j < NumberofAssignments; j++) {
-					statement1.setInt(1, j);
+					statement1.setInt(1, 1000 + j);
 					statement1.setInt(3, AssignmentArray[j]);
 					
 					System.out.println("connection success!!");
