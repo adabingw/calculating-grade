@@ -3,7 +3,10 @@ import javax.swing.JOptionPane;
 public class qForUnits {
 
 	public int AskUnits(String courseName) {
-		String NumberUnits = JOptionPane.showInputDialog(null, "How many units are in this course?", courseName, JOptionPane.INFORMATION_MESSAGE);
+		JLabel label = new JLabel("How many units are in this course?");
+		label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		String NumberUnits = JOptionPane.showInputDialog(null, label, courseName, JOptionPane.PLAIN_MESSAGE);
 		if (NumberUnits != null) {
 		    try {
 		    	   int NumberofUnits = Integer.parseInt(NumberUnits); 
@@ -23,29 +26,35 @@ public class qForUnits {
 	} // all clear
 	
 	public int Unitw(int UnitNo, String courseName) {
-			String UnitwLOL = JOptionPane.showInputDialog(null, "For unit " + UnitNo + ", please type in the weighting (discard the percent sign): ", courseName, JOptionPane.INFORMATION_MESSAGE);
-			if (UnitwLOL != null) {
-			    try {
-				    	int UnitWeightLOL = Integer.parseInt(UnitwLOL);
-						System.out.println("Unit weight is " + UnitWeightLOL + "%"); // system check
-						if (UnitWeightLOL < 0 || UnitWeightLOL > 100) {
-				    	    JOptionPane.showMessageDialog(null, "Input out of bounds",
+		JLabel label = new JLabel("For unit " + UnitNo + ", please type in the weighting (discard the percent sign): ");
+		label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		String UnitwLOL = JOptionPane.showInputDialog(null, label, courseName, JOptionPane.PLAIN_MESSAGE);
+		if (UnitwLOL != null) {
+			try {
+			    	int UnitWeightLOL = Integer.parseInt(UnitwLOL);
+				System.out.println("Unit weight is " + UnitWeightLOL + "%"); // system check
+				if (UnitWeightLOL < 0 || UnitWeightLOL > 100) {
+			    	    JOptionPane.showMessageDialog(null, "Input out of bounds",
 				    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
-				    	    System.exit(0);
-						}
-					    return UnitWeightLOL;
-			    	 } catch(NumberFormatException e) {
-			    	    JOptionPane.showMessageDialog(null, "Input is not a number",
-			    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
 			    	    System.exit(0);
-			    	 } 
+				}
+				return UnitWeightLOL;
+			    	} catch(NumberFormatException e) {
+			    	  JOptionPane.showMessageDialog(null, "Input is not a number",
+			    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
+			    	  System.exit(0);
+			    	} 
 			} else 	System.exit(0);
 		 return 0;
 			
 	} // all clear
 	
 	public int AskAssign(int UnitNo, String courseName) {
-		String NoAssign = JOptionPane.showInputDialog(null, "How many assignments are in this unit?", courseName + " Unit " + UnitNo, JOptionPane.INFORMATION_MESSAGE);
+		JLabel label = new JLabel("How many assignments are in this unit?");
+		label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		String NoAssign = JOptionPane.showInputDialog(null, label, courseName + " Unit " + UnitNo, JOptionPane.PLAIN_MESSAGE);
 		if (NoAssign != null) {
 		    try {
 		    	   int AssignNo = Integer.parseInt(NoAssign); 
@@ -73,8 +82,10 @@ public class qForUnits {
 				
 		for (int i = 0; i < Assign; i++) {
 			System.out.println("For Assignment " + (i+1)); // system check
-			Assignments[i] = JOptionPane.showInputDialog(null, "Mark of Assignment "+ (i+1), courseName + " Unit " + UnitNo, JOptionPane.INFORMATION_MESSAGE);			
-			
+			JLabel label = new JLabel("Mark of Assignment "+ (i+1));
+			label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+			label.setHorizontalAlignment(SwingConstants.CENTER);
+			Assignments[i] = JOptionPane.showInputDialog(null, label, courseName + " Unit " + UnitNo, JOptionPane.PLAIN_MESSAGE);						
 			if (Assignments[i] != null) {
 			    
 				try {
@@ -98,7 +109,10 @@ public class qForUnits {
 	}
 	
 	public int InputUnitFinal(int UnitNo, String courseName) {
-			String UnitF = JOptionPane.showInputDialog(null, "Input your unit final mark: ", courseName + " Unit " + UnitNo, JOptionPane.INFORMATION_MESSAGE);
+			JLabel label = new JLabel("Input your unit final mark: ");
+			label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+			label.setHorizontalAlignment(SwingConstants.CENTER);
+			String UnitF = JOptionPane.showInputDialog(null, label, courseName + " Unit " + UnitNo, JOptionPane.PLAIN_MESSAGE);
 			if (UnitF != null) {				
 			    try {
 				    int UnitFinale = Integer.parseInt(UnitF);
