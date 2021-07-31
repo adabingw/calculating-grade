@@ -4,17 +4,28 @@ SHOW DATABASES;
 
 USE grades;
 
+CREATE TABLE course (
+  course_id int NOT NULL AUTO_INCREMENT,
+  course_name VARCHAR(20),
+  course_mark int NOT NULL,
+  PRIMARY KEY (course_id)
+  );
+
 CREATE TABLE unit (
-  unit_no int NOT NULL,
+  course_id int NOT NULL AUTO_INCREMENT,
+  unit_id int NOT NULL,
   unit_w int NOT NULL,
   unit_final int NOT NULL,
   unit_mark int NOT NULL,
-  PRIMARY KEY (unit_no)
+  course_name VARCHAR(20),
+  PRIMARY KEY (unit_id, course_id)
   );
 
 CREATE TABLE assignments (
-  assign_no int NOT NULL,
-  unit_no int NOT NULL,
+  course_id int NOT NULL AUTO_INCREMENT,
+  assign_id int NOT NULL,
+  unit_id int NOT NULL,
   assign_mark int NOT NULL,
-  PRIMARY KEY (assign_no, unit_no)
+  course_name VARCHAR(20),
+  PRIMARY KEY (assign_no, unit_no, course_id)
   );
