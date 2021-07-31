@@ -3,7 +3,10 @@ import javax.swing.JOptionPane;
 public class qForCourses {
 	
 	public int AskCourses() {
-		String NumberCourses = JOptionPane.showInputDialog(null, "How many courses do you want to calculate for?");
+		JLabel label = new JLabel("How many courses do you want to calculate for?");
+		label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		String NumberCourses = JOptionPane.showInputDialog(null, label, " ", JOptionPane.PLAIN_MESSAGE);
 		if (NumberCourses != null) {
 		    try {
 		    	   int NumberofCourses = Integer.parseInt(NumberCourses); 
@@ -23,7 +26,10 @@ public class qForCourses {
 	} // all clear
 	
 	public String CourseName(int CourseNo) {
-		String NameofCourse = JOptionPane.showInputDialog(null, "For course " + CourseNo + ", please type in the course name: ");
+		JLabel label = new JLabel("For course " + CourseNo + ", please type in the course name: ");
+		label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		String NameofCourse = JOptionPane.showInputDialog(null, label, " ", JOptionPane.PLAIN_MESSAGE);
 		String s = null;
 		if (NameofCourse != null) {
 			return NameofCourse;
