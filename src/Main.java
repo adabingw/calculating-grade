@@ -38,6 +38,8 @@ public class Main {
 
 	OneCourseClick occ = new OneCourseClick();
 	AllCoursesClick acc = new AllCoursesClick();
+	loginClick lc = new loginClick();
+	signUpClick suc = new signUpClick();
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -56,76 +58,115 @@ public class Main {
 	}
 
 	public Main() {
-		initialize();
-	}
-
-	private void initialize() {
-		frame = new JFrame();
-		frame.getContentPane().setBackground(Color.WHITE);
-		
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.WHITE);
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(Color.WHITE);
-		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(59)
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 318, Short.MAX_VALUE)
-					.addGap(59))
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addGap(127)
-					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 194, Short.MAX_VALUE)
-					.addGap(115))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(60)
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
-					.addGap(79))
-		);
-		
-		JLabel lblNewLabel = new JLabel(" Grade Calculator");
-		lblNewLabel.setFont(new Font("Mindline Slant Demo", Font.PLAIN, 50));
-		panel.add(lblNewLabel);
-		
-		JButton btnNewButton_1 = new JButton("Calculate Average for All Courses");
-		btnNewButton_1.setBackground(Color.WHITE);
-		btnNewButton_1.setFont(new Font("Times New Roman", Font.PLAIN, 10));
-		btnNewButton_1.addActionListener(acc);
-		panel_1.add(btnNewButton_1);
-		
-		JButton btnNewButton = new JButton("Calculate Average for One Course");
-		btnNewButton.setFont(new Font("Times New Roman", Font.PLAIN, 10));
-		btnNewButton.setBackground(Color.WHITE);
-		btnNewButton.addActionListener(occ);
-		panel_1.add(btnNewButton);
-		
-		frame.getContentPane().setLayout(groupLayout);
-		frame.setBounds(100, 100, 450, 300);
-		frame.pack();
-		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame = new JFrame();
+			frame.getContentPane().setBackground(Color.WHITE);
+			
+			JPanel panel = new JPanel();
+			panel.setBackground(Color.WHITE);
+			
+			JPanel panel_1 = new JPanel();
+			panel_1.setBackground(Color.WHITE);
+			GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+			groupLayout.setHorizontalGroup(
+				groupLayout.createParallelGroup(Alignment.LEADING)
+					.addGroup(groupLayout.createSequentialGroup()
+						.addGap(59)
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 318, Short.MAX_VALUE)
+						.addGap(59))
+					.addGroup(groupLayout.createSequentialGroup()
+						.addGap(127)
+						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 194, Short.MAX_VALUE)
+						.addGap(115))
+			);
+			groupLayout.setVerticalGroup(
+				groupLayout.createParallelGroup(Alignment.LEADING)
+					.addGroup(groupLayout.createSequentialGroup()
+						.addContainerGap(60, Short.MAX_VALUE)
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
+						.addGap(58))
+			);
+			
+			JLabel label = new JLabel(" Grade Calculator");
+			label.setFont(new Font("Mindline Slant Demo", Font.PLAIN, 50));
+			panel.add(label);
+			
+			JButton avgAll = new JButton("Calculate Average for All Courses");
+			avgAll.setBackground(Color.WHITE);
+			avgAll.setFont(new Font("Times New Roman", Font.PLAIN, 10));
+			avgAll.addActionListener(acc);
+			panel_1.add(avgAll);
+			
+			JButton avgOne = new JButton("Calculate Average for One Course");
+			avgOne.setFont(new Font("Times New Roman", Font.PLAIN, 10));
+			avgOne.setBackground(Color.WHITE);
+			avgOne.addActionListener(occ);
+			panel_1.add(avgOne);
+			
+			JButton btnLogin = new JButton("LOGIN");
+			btnLogin.setFont(new Font("Times New Roman", Font.PLAIN, 10));
+			btnLogin.addActionListener(lc);
+			btnLogin.setBackground(Color.WHITE);
+			panel_1.add(btnLogin);
+			
+			JButton btnSignUp = new JButton("SIGN UP");
+			btnSignUp.setFont(new Font("Times New Roman", Font.PLAIN, 10));
+			btnSignUp.addActionListener(suc);
+			btnSignUp.setBackground(Color.WHITE);
+			panel_1.add(btnSignUp);
+			
+			frame.getContentPane().setLayout(groupLayout);
+			frame.setBounds(100, 100, 450, 300);
+			frame.pack();
+			frame.setLocationRelativeTo(null);
+			frame.setResizable(false);
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	public class OneCourseClick implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
-			frame.setVisible(false);
-			new averageOneCourse(" ");
+			JLabel label = new JLabel("Your progress will not be saved. Continue?");
+			label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+			label.setHorizontalAlignment(SwingConstants.CENTER);
+			if (JOptionPane.showConfirmDialog(null, label, null,
+			        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				frame.setVisible(false);
+				new averageOneCourse(" ", true, null, null, true, null);
+			} else {
+				JOptionPane.getRootFrame().dispose();   
+			}
 		}
 	}
 	
 	public class AllCoursesClick implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
-			frame.setVisible(false);
-			new averageAllCourses();
+			JLabel label = new JLabel("Your progress will not be saved. Continue?");
+			label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+			label.setHorizontalAlignment(SwingConstants.CENTER);
+			if (JOptionPane.showConfirmDialog(null, label, null,
+			        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				frame.setVisible(false);
+				new averageAllCourses(true, null, null, null);
+			} else {
+				JOptionPane.getRootFrame().dispose();   
+			}
 		}
 	}
 	
-}
+	public class loginClick implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			frame.setVisible(false);
+			new LoginVerify();
+			System.out.println("LOGIN CLICKED!");
+		}
+	}
+	
+	public class signUpClick implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			frame.setVisible(false);
+			System.out.println("SIGNUP CLICKED!");
+		}
+	}
+	
 }
