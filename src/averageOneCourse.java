@@ -11,7 +11,7 @@ public class averageOneCourse {
 	
 	int sum;
 	
-	public averageOneCourse(String courseName) {
+	public averageOneCourse(String courseName, boolean guest, String user_id, String name, boolean end, String pswrd) {
 		String url = "jdbc:mysql://localhost:3306/grades";
 		String username = "root";
 		String password = "/////";
@@ -35,49 +35,54 @@ public class averageOneCourse {
 			unitUNweighted[i] = (int) Math.round(averageAssignments + UnitFinaleW);
 			unitweighted[i] = (int) Math.round(unitUNweighted[i] * ((double) Weight/100));
 		
-			try {
-				Connection connection = DriverManager.getConnection(url, username, password);
-				String sql = "INSERT INTO unit (UNIT_NO, UNIT_W, UNIT_FINAL, UNIT_MARK) VALUES (?, ?, ?, ?)";
-				PreparedStatement statement = connection.prepareStatement(sql);
-				statement.setInt(1, i + 100);
-				statement.setInt(2, Weights[i]);
-				statement.setInt(3, InputedUFinal);
-				statement.setInt(4, unitUNweighted[i]);
-			
-				System.out.println("connection success!!");
-			
-				int rows = statement.executeUpdate();
-				if (rows > 0) {
-					System.out.println("A row has been inserted.");
-				}
+			if (guest == false) {
+		
+				try {
+					Connection connection = DriverManager.getConnection(url, username, password);
+					String sql = "INSERT INTO unit (UNIT_ID, UNIT_W, UNIT_FINAL, UNIT_MARK, USER_ID) VALUES (?, ?, ?, ?, ?)";
+					PreparedStatement statement = connection.prepareStatement(sql);
+					statement.setInt(1, i + 100);
+					statement.setInt(2, Weights[i]);
+					statement.setInt(3, InputedUFinal);
+					statement.setInt(4, unitUNweighted[i]);
+					statement.setString(5, user_id);
 				
-				String sql1 = "INSERT INTO assignments (ASSIGN_NO, UNIT_NO, ASSIGN_MARK) VALUES (?, ?, ?)";
-				PreparedStatement statement1 = connection.prepareStatement(sql1);
-			
-				statement1.setInt(2, i + 100);
-
-				for (int j = 0; j < NumberofAssignments; j++) {
-					statement1.setInt(1, 1000 + j);
-					statement1.setInt(3, AssignmentArray[j]);
-					
 					System.out.println("connection success!!");
-			
-					int rows1 = statement1.executeUpdate();
-					if (rows1 > 0) {
-						System.out.println("Assignment Update Success!!");
+				
+					int rows = statement.executeUpdate();
+					if (rows > 0) {
+						System.out.println("A row has been inserted.");
 					}
+					
+					String sql1 = "INSERT INTO assignments (ASSIGN_ID, UNIT_ID, ASSIGN_MARK, USER_ID) VALUES (?, ?, ?, ?)";
+					PreparedStatement statement1 = connection.prepareStatement(sql1);
+				
+					statement1.setInt(2, i + 100);
+					statement1.setString(4, user_id);
+	
+					for (int j = 0; j < NumberofAssignments; j++) {
+						statement1.setInt(1, 1000 + j);
+						statement1.setInt(3, AssignmentArray[j]);
+						
+						System.out.println("connection success!!");
+				
+						int rows1 = statement1.executeUpdate();
+						if (rows1 > 0) {
+							System.out.println("Assignment Update Success!!");
+						}
+					}
+				
+					statement1.close();
+					connection.close();
+				
+					statement.close();
+					connection.close();
+				} catch (SQLException e) {
+					System.out.println("& i oop");
+					e.printStackTrace();
 				}
-			
-				statement1.close();
-				connection.close();
-			
-				statement.close();
-				connection.close();
-			} catch (SQLException e) {
-				System.out.println("& i oop");
-				e.printStackTrace();
 			}
-		}
+			}
 		sum = IntStream.of(unitweighted).sum();
 		double WeightSum = Arrays.stream(Weights).sum();
 		if (WeightSum != 100.0) {
@@ -87,6 +92,9 @@ public class averageOneCourse {
 		} else {
 			System.out.println("The final mark for this course is: " + sum);
 			JOptionPane.showMessageDialog(null, "The final mark for this course is: " + sum);
+		}
+		if (guest == false && end == true) {
+			new userMain(user_id, name, pswrd);
 		}
 	}
 	
