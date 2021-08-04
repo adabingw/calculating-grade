@@ -26,15 +26,15 @@ public class averageAllCourses {
 					Connection connection = DriverManager.getConnection(url, username, password);
 					System.out.println("connection success!!");
 					
-					String sql = "UPDATE unit SET course_name = ? WHERE course_id = ?";
+					String sql = "UPDATE unit SET course_id = ? WHERE course_name = ?";
 					PreparedStatement statement = connection.prepareStatement(sql);
-					statement.setString(1, CNames[i]);
-					statement.setInt(2, i + 1);
+					statement.setInt(1, i+1);
+					statement.setString(2, CNames[i]);
 					
-					String sql1 = "UPDATE assignments SET course_name = ? WHERE course_id = ?";
+					String sql1 = "UPDATE assignments SET course_id = ? WHERE course_name = ?";
 					PreparedStatement statement1 = connection.prepareStatement(sql1);
-					statement1.setString(1, CNames[i]);
-					statement1.setInt(2, i + 1);
+					statement1.setInt(1, i+1);
+					statement1.setString(2, CNames[i]);
 							
 					int rows = statement.executeUpdate();
 					if (rows > 0) {
