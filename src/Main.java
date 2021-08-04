@@ -165,6 +165,7 @@ public class Main {
 	public class signUpClick implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
 			frame.setVisible(false);
+			new SignUpUser();
 			System.out.println("SIGNUP CLICKED!");
 		}
 	}
