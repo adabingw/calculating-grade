@@ -17,7 +17,7 @@ public class ViewDatabase {
 	public ViewDatabase(String user) {
 		String url = "jdbc:mysql://localhost:3306/grades";
 		String username = "root";
-		String password = "Will@3229967163";
+		String password = " ";
 		JTable jt, jt1, jt2;
 		JFrame f;
 		DefaultTableModel model = new DefaultTableModel();
