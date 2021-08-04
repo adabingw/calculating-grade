@@ -20,6 +20,7 @@ public class userMain {
 	AllCoursesClick acc = new AllCoursesClick();
 	logoutClick lc = new logoutClick();
 	settingsClick sc = new settingsClick();
+	viewDatabase vd = new viewDatabase();
 	String user_id;
 	String name;
 	String password;
@@ -87,16 +88,12 @@ public class userMain {
 		avgOne.setBackground(Color.WHITE);
 		avgOne.addActionListener(occ);
 		panel_1.add(avgOne);
-		
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		
+				
 		JButton checkGrades = new JButton("Check grades");
 		checkGrades.setFont(new Font("Times New Roman", Font.PLAIN, 10));
-		checkGrades.addActionListener(lc);
+		checkGrades.addActionListener(vd);
 		checkGrades.setBackground(Color.WHITE);
 		panel_1.add(checkGrades);
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		JButton logoutButton = new JButton("LOGOUT");
 		logoutButton.setFont(new Font("Times New Roman", Font.PLAIN, 10));
@@ -142,6 +139,14 @@ public class userMain {
 			frame.dispose();
 			System.out.println("SETTINGS CLICKED!");
 			new Settings(user_id, name, password);			
+		}
+	}
+	
+	public class viewDatabase implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			frame.dispose();
+			System.out.println("VIEW DATABASE CLICKED!");
+			new ViewDatabase(user_id);			
 		}
 	}
 }
