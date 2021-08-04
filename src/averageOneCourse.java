@@ -39,13 +39,14 @@ public class averageOneCourse {
 		
 				try {
 					Connection connection = DriverManager.getConnection(url, username, password);
-					String sql = "INSERT INTO unit (UNIT_ID, UNIT_W, UNIT_FINAL, UNIT_MARK, USER_ID) VALUES (?, ?, ?, ?, ?)";
+					String sql = "INSERT INTO unit (UNIT_ID, UNIT_W, UNIT_FINAL, UNIT_MARK, USER_ID, COURSE_NAME) VALUES (?, ?, ?, ?, ?, ?)";
 					PreparedStatement statement = connection.prepareStatement(sql);
 					statement.setInt(1, i + 100);
 					statement.setInt(2, Weights[i]);
 					statement.setInt(3, InputedUFinal);
 					statement.setInt(4, unitUNweighted[i]);
 					statement.setString(5, user_id);
+					statement.setString(6, courseName);
 				
 					System.out.println("connection success!!");
 				
@@ -54,11 +55,12 @@ public class averageOneCourse {
 						System.out.println("A row has been inserted.");
 					}
 					
-					String sql1 = "INSERT INTO assignments (ASSIGN_ID, UNIT_ID, ASSIGN_MARK, USER_ID) VALUES (?, ?, ?, ?)";
+					String sql1 = "INSERT INTO assignments (ASSIGN_ID, UNIT_ID, ASSIGN_MARK, USER_ID, COURSE_NAME) VALUES (?, ?, ?, ?, ?)";
 					PreparedStatement statement1 = connection.prepareStatement(sql1);
 				
 					statement1.setInt(2, i + 100);
 					statement1.setString(4, user_id);
+					statement1.setString(5, courseName);
 	
 					for (int j = 0; j < NumberofAssignments; j++) {
 						statement1.setInt(1, 1000 + j);
