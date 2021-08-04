@@ -17,7 +17,7 @@ public class SignUpUser {
 		
 		String url = "jdbc:mysql://localhost:3306/grades";
 		String username = "root";
-		String password = "Will@3229967163";
+		String password = " ";
 		
         JPasswordField jpf = new JPasswordField(10);
  	    JLabel jl = new JLabel("Password: ");
