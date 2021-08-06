@@ -25,28 +25,53 @@ public class qForUnits {
 		return 0; 
 	} // all clear
 	
-	public int Unitw(int UnitNo, String courseName) {
-		JLabel label = new JLabel("For unit " + UnitNo + ", please type in the weighting (discard the percent sign): ");
+	public String[] Unitw(int UnitNo, String courseName) {
+		String[] unitInfo = new String[2];
+		JLabel l = new JLabel("For unit " + UnitNo + ", please type in the weighting (discard the percent sign) and the name: ");
+		l.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		l.setHorizontalAlignment(SwingConstants.CENTER);
+			
+		JTextField w = new JTextField(10);
+		JLabel label = new JLabel("Weighting:");
 		label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		String UnitwLOL = JOptionPane.showInputDialog(null, label, courseName, JOptionPane.PLAIN_MESSAGE);
-		if (UnitwLOL != null) {
-			try {
-			    	int UnitWeightLOL = Integer.parseInt(UnitwLOL);
-				System.out.println("Unit weight is " + UnitWeightLOL + "%"); // system check
-				if (UnitWeightLOL < 0 || UnitWeightLOL > 100) {
-			    	    JOptionPane.showMessageDialog(null, "Input out of bounds",
+		label.setHorizontalAlignment(SwingConstants.LEFT);
+		    
+		JTextField n = new JTextField(10);		    
+		JLabel label2 = new JLabel("Name");
+		label2.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		label2.setHorizontalAlignment(SwingConstants.LEFT);
+		    
+		Object[] message = {
+			l,
+			label, w,
+			label2, n,
+		};
+		    
+		int result = JOptionPane.showConfirmDialog(null, message, 
+		    		courseName, JOptionPane.OK_CANCEL_OPTION);
+		if (result == JOptionPane.OK_OPTION) {
+		       unitInfo[0] = w.getText();
+		       unitInfo[1] = n.getText();
+		}			
+			
+/*			String UnitwLOL = JOptionPane.showInputDialog(null, message, courseName, JOptionPane.PLAIN_MESSAGE);
+			if (UnitwLOL != null) {
+			    try {
+				    	int UnitWeightLOL = Integer.parseInt(UnitwLOL);
+						System.out.println("Unit weight is " + UnitWeightLOL + "%"); // system check
+						if (UnitWeightLOL < 0 || UnitWeightLOL > 100) {
+				    	    JOptionPane.showMessageDialog(null, "Input out of bounds",
 				    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
-			    	    System.exit(0);
-				}
-				return UnitWeightLOL;
-			    	} catch(NumberFormatException e) {
-			    	  JOptionPane.showMessageDialog(null, "Input is not a number",
+				    	    System.exit(0);
+						}
+					    return UnitWeightLOL;
+			    	 } catch(NumberFormatException e) {
+			    	    JOptionPane.showMessageDialog(null, "Input is not a number",
 			    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
-			    	  System.exit(0);
-			    	} 
-			} else 	System.exit(0);
-		 return 0;
+			    	    System.exit(0);
+			    	 } */
+			 else 	System.exit(0);
+			return unitInfo;
 			
 	} // all clear
 	
@@ -75,14 +100,37 @@ public class qForUnits {
 		return 0;
 	} // all clear
 	
-	public int[] InputAssign(int Assign, int UnitNo, String courseName) {
+	public String[][] InputAssign(int Assign, int UnitNo, String courseName) {
+
 		System.out.println("Assign is " + Assign); // system check
-		String[] Assignments = new String[Assign]; 
-		int[] AssignmentsLOL = new int[Assign]; 
+		String[][] Assignments = new String[2][Assign]; 
 				
 		for (int i = 0; i < Assign; i++) {
-			System.out.println("For Assignment " + (i+1)); // system check
-			JLabel label = new JLabel("Mark of Assignment "+ (i+1));
+		JTextField n = new JTextField(10);
+		JLabel label = new JLabel("Name of assignment " + (i+1) + ":");
+		label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		label.setHorizontalAlignment(SwingConstants.LEFT);
+		   
+		JTextField mark = new JTextField(10);		    
+		JLabel label2 = new JLabel("Mark of assignment " + (i+1) + ":");
+		label2.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		label2.setHorizontalAlignment(SwingConstants.LEFT);
+		    
+		Object[] message = {
+			label, n,
+			label2, mark,
+		};
+		    
+		int result = JOptionPane.showConfirmDialog(null, message, courseName + " Unit " + UnitNo
+		             , JOptionPane.OK_CANCEL_OPTION);
+		if (result == JOptionPane.OK_OPTION) {
+		       Assignments[0][i] = mark.getText();
+		       Assignments[1][i] = n.getText();
+		} else System.exit(0);
+		}
+		return Assignments;
+	}
+/*			JLabel label = new JLabel("Mark of Assignment "+ (i+1));
 			label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 			label.setHorizontalAlignment(SwingConstants.CENTER);
 			Assignments[i] = JOptionPane.showInputDialog(null, label, courseName + " Unit " + UnitNo, JOptionPane.PLAIN_MESSAGE);						
@@ -106,7 +154,7 @@ public class qForUnits {
 				} else System.exit(0);
 		}
 		return AssignmentsLOL;
-	}
+	} */
 	
 	public int InputUnitFinal(int UnitNo, String courseName) {
 			JLabel label = new JLabel("Input your unit final mark: ");
