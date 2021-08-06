@@ -115,10 +115,10 @@ public class ClearRow {
 			System.out.println(table);
 			String attribute = comboBox1.getSelectedItem().toString();
 			System.out.println(attribute);
-		    String data = t.getText();
+			String data = t.getText();
 			System.out.println(data);
-			IsNumber in = new IsNumber();
-	        d1 = in.stringToInt(data);
+			d1 = stringToInt(data);
+
 			     
 				try {
 										
