@@ -490,4 +490,15 @@ public class ClearRow {
 			
 		}}
 	
+	public int stringToInt (String data) {
+		try {
+	    	   int dataNo = Integer.parseInt(data);
+	    	   return dataNo;
+	    	 } catch(NumberFormatException e) {
+	    	   System.out.println("input is not an int value"); 
+	    	    JOptionPane.showMessageDialog(null, "Input is not a number",
+	    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
+	    	 }
+		return 0;
+	}
 }
