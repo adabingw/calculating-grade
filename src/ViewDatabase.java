@@ -14,12 +14,19 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.BorderLayout;
 
 public class ViewDatabase {
+	
+	String name;
+	String user;
+	String pswrd;
+	JFrame f;
+	backB b = new backB();
+	clearRow cr = new clearRow();
+	
 	public ViewDatabase(String user) {
 		String url = "jdbc:mysql://localhost:3306/grades";
 		String username = "root";
 		String password = " ";
 		JTable jt, jt1, jt2;
-		JFrame f;
 		DefaultTableModel model = new DefaultTableModel();
 		model.addColumn("COURSE ID");
 		model.addColumn("COURSE NAME");
@@ -44,7 +51,9 @@ public class ViewDatabase {
  			f = new JFrame();
  			f.setBackground(Color.WHITE);
  			f.setTitle("JTable Example");
- 			f.setLayout(new BorderLayout(0, 0));
+			GridBagLayout gbl = new GridBagLayout();
+ 			GridBagConstraints c = new GridBagConstraints();
+ 			f.setLayout(gbl);
   			 	   
 	 	   String sql = "SELECT course_id, course_name, course_mark FROM course WHERE user_id = ?";
 	 	   PreparedStatement statement = connection.prepareStatement(sql);
@@ -132,31 +141,116 @@ public class ViewDatabase {
 				    };
 				    jt2.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 			    
- 		    JScrollPane sp = new JScrollPane(jt);
- 		    JScrollPane sp1 = new JScrollPane(jt1);
- 		    JScrollPane sp2 = new JScrollPane(jt2);
+ 		    JScrollPane sp = new JScrollPane(jt, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+ 		            JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+ 		    JScrollPane sp1 = new JScrollPane(jt1, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+ 		            JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+ 		    JScrollPane sp2 = new JScrollPane(jt2, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+ 		            JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+ 		    
+ 			JButton backButton = new JButton("BACK");
+ 			backButton.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+ 			backButton.addActionListener(b);
+ 			backButton.setBackground(Color.WHITE);
+ 			
+ 			JButton clearAll = new JButton("CLEAR ALL");
+ 			clearAll.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+// 			clearAll.addActionListener(b);
+ 			clearAll.setBackground(Color.WHITE);
+ 			
+ 			JButton clearSelected = new JButton("CLEAR ROWS");
+ 			clearSelected.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+ 			clearSelected.addActionListener(cr);
+ 			clearSelected.setBackground(Color.WHITE);
+ 			
+ 			JButton clearTable = new JButton("CLEAR TABLE");
+ 			clearTable.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+// 			clearTable.addActionListener(b);
+ 			clearTable.setBackground(Color.WHITE);
+ 			
+ 			JPanel p = new JPanel();
+ 			
+ 	 	    JLabel l = new JLabel("COURSES");
+ 			l.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+ 			l.setHorizontalAlignment(SwingConstants.CENTER);
+ 			JLabel l1 = new JLabel("UNITS");
+ 			l1.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+ 			l1.setHorizontalAlignment(SwingConstants.CENTER);
+ 			JLabel l2 = new JLabel("ASSIGNMENTS");
+ 			l2.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+ 			l2.setHorizontalAlignment(SwingConstants.CENTER);
 
+			GridBagLayout g = new GridBagLayout();
+ 			GridBagConstraints gbc = new GridBagConstraints();
+ 			p.setLayout(g);
+ 			gbc.fill = GridBagConstraints.HORIZONTAL;
+ 			gbc.gridx = 0;
+ 			gbc.gridy = 0;
+ 			p.add(backButton, gbc);
+ 			gbc.gridx = 1;
+ 			gbc.gridy = 0;
+ 			p.add(clearAll, gbc);
+ 			gbc.gridx = 2;
+ 			gbc.gridy = 0;
+ 			p.add(clearSelected, gbc);
+ 			gbc.gridx = 3;
+ 			gbc.gridy = 0;
+ 			p.add(clearTable, gbc);
+ 			
  		    sp.getViewport().setBackground(Color.white);
- 		    sp.setPreferredSize(new Dimension(700, 250));
-		    f.getContentPane().add(sp, BorderLayout.PAGE_START);
+ 		    sp.setPreferredSize(new Dimension(900, 200));
 		    
  		    sp1.getViewport().setBackground(Color.white);
- 		    sp1.setPreferredSize(new Dimension(700, 250));
-		    f.getContentPane().add(sp1, BorderLayout.CENTER);
+ 		    sp1.setPreferredSize(new Dimension(900, 200));
 		    
 		    sp2.getViewport().setBackground(Color.white);
- 		    sp2.setPreferredSize(new Dimension(700, 250));
-		    f.getContentPane().add(sp2, BorderLayout.PAGE_END);
-		    
- 		    f.pack();
+ 		    sp2.setPreferredSize(new Dimension(900, 200));
+
+ 			c.fill = GridBagConstraints.HORIZONTAL;
+ 			c.gridx = 0;
+ 			c.gridy = 0;
+ 			f.add(l, c);
+ 			c.gridx = 0;
+ 			c.gridy = 1;
+ 			f.add(sp, c);
+ 			c.gridx = 0;
+ 			c.gridy = 2;
+ 			f.add(l1, c); 
+ 			c.gridx = 0;
+ 			c.gridy = 3;
+ 			f.add(sp1, c);
+ 			c.gridx = 0;
+ 			c.gridy = 4;
+ 			f.add(l2, c);
+ 			c.gridx = 0;
+ 			c.gridy = 5;
+ 			f.add(sp2, c);
+ 			c.gridx = 0;
+ 			c.gridy = 6;
+ 			f.add(p, c); 
+
+		    f.pack();
  		    f.setResizable(false);
 			f.setLocationRelativeTo(null);
-		    
 			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			f.setVisible(true);
  	   } catch (SQLException e) {
 				System.out.println("& i oop");
 				e.printStackTrace();
 	     }
+	}
+	
+	public class backB implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			f.setVisible(false);
+			new userMain(user, name, pswrd);
+			System.out.println("BACK CLICKED!");
+		}
+	}
+	
+	public class clearRow implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			new ClearRow(user, name, pswrd, f);
+		}
 	}
 }
