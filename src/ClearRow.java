@@ -21,6 +21,7 @@ public class ClearRow {
 	private JFrame frame;
 	private JTextField t;
 	okClick ok = new okClick();
+	cancelClick cancel = new cancelClick();
 	JComboBox<String> comboBox, comboBox1;
 	
 	String url = "jdbc:mysql://localhost:3306/grades";
@@ -101,10 +102,18 @@ public class ClearRow {
 		cancelButton.setBackground(Color.WHITE);
 		cancelButton.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		cancelButton.setBounds(286, 116, 85, 21);
+		cancelButton.addActionListener(cancel);
 		panel.add(cancelButton);
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+	}
+	
+	public class cancelClick implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			frame.setVisible(false);
+			System.out.println("CANCEL CLICKED!");
+		}
 	}
 	
 	public class okClick implements ActionListener {
