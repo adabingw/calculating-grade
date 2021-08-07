@@ -26,7 +26,7 @@ public class Settings {
 	
 	String url = "jdbc:mysql://localhost:3306/grades";
 	String username = "root";
-	String password = "Will@3229967163";
+	String password = " ";
 	
 	JFrame frame;
 	
@@ -35,8 +35,9 @@ public class Settings {
 	changeProfileName cpn = new changeProfileName();
 	changeUsername cu = new changeUsername();
 	ChangePassword cp = new ChangePassword();
-	backButton b = new backButton()
-;	
+	backButton b = new backButton();
+	deleteAcc da = new deleteAcc();
+	
 	public Settings(String user_id, String name, String pswrd) {
 		this.user_id = user_id;
 		this.name = name;
@@ -58,13 +59,19 @@ public class Settings {
 		backButton.addActionListener(b);
 		backButton.setBackground(Color.WHITE);
 		
+		JButton deleteAccButton = new JButton("DELETE ACCOUNT");
+		deleteAccButton.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		deleteAccButton.addActionListener(da);
+		deleteAccButton.setBackground(Color.WHITE);
+
+		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap(56, Short.MAX_VALUE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addComponent(panel, GroupLayout.PREFERRED_SIZE, 165, GroupLayout.PREFERRED_SIZE)
 								.addGroup(groupLayout.createSequentialGroup()
@@ -72,7 +79,9 @@ public class Settings {
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(panel_1_1, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE)))
 							.addGap(87))
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(deleteAccButton)
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 							.addComponent(backButton, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
 							.addGap(71))))
 		);
@@ -86,7 +95,9 @@ public class Settings {
 						.addComponent(panel_1_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(panel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
-					.addComponent(backButton, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(backButton, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+						.addComponent(deleteAccButton))
 					.addGap(44))
 		);
 		
@@ -311,6 +322,51 @@ public class Settings {
 			frame.setVisible(false);
 			new userMain(user_id, name, pswrd);
 			System.out.println("BACK CLICKED!");
+		}
+	}
+	
+	public class deleteAcc implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			JLabel l = new JLabel("This action cannot be reversed. Continue?");
+			l.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+			l.setHorizontalAlignment(SwingConstants.CENTER);
+			
+			JLabel l1 = new JLabel("Error occured");
+			l1.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+			l1.setHorizontalAlignment(SwingConstants.CENTER);
+			
+			if (JOptionPane.showConfirmDialog(null, l, "WARNING",
+			        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				
+		            try {	
+						Connection connection = DriverManager.getConnection(url, username, password);
+						System.out.println("connection success!!");
+																		
+						String sql = "DELETE FROM user_info WHERE user_id = ?";
+						PreparedStatement statement = connection.prepareStatement(sql);
+						statement.setString(1, user_id);
+										
+						int rows = statement.executeUpdate();
+						if (rows > 0) {
+							Main window = new Main();
+							window.frame.setVisible(true);
+							frame.setVisible(false);
+							System.out.println("Account deleted!");
+						} else if (rows == 0) {
+							JOptionPane.showMessageDialog(null, l1,
+							    	    	      "ERROR", JOptionPane.ERROR_MESSAGE); 
+						}						
+						statement.close();
+						connection.close();
+						
+					} catch (SQLException e) {
+						System.out.println("& i oop");
+						e.printStackTrace();
+			        }	   
+						
+			} else {
+				JOptionPane.getRootFrame().dispose();   
+			}
 		}
 	}
 }
