@@ -51,6 +51,7 @@ public class ClearRow {
 		
 		comboBox = new JComboBox<>();
 		comboBox.setBackground(Color.WHITE);
+		comboBox.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		comboBox.setBounds(168, 40, 87, 21);
 		
 		comboBox.addItem("course");
@@ -66,6 +67,7 @@ public class ClearRow {
 		
 		comboBox1 = new JComboBox<>();
 		comboBox1.setBackground(Color.WHITE);
+		comboBox1.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		comboBox1.setBounds(56, 70, 153, 21);
 		panel.add(comboBox1);
 		
