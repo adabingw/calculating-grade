@@ -26,7 +26,7 @@ public class ClearRow {
 	
 	String url = "jdbc:mysql://localhost:3306/grades";
 	String username = "root";
-	String password = "Will@3229967163";
+	String password = " ";
 	String user, name, pswrd;
 	JFrame f;
 	public ClearRow(String user_id, String name, String pswrd, JFrame jf) {
