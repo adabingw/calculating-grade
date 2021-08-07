@@ -13,7 +13,7 @@ public class ClearTable {
 	
 	String url = "jdbc:mysql://localhost:3306/grades";
 	String username = "root";
-	String password = "Will@3229967163";
+	String password = " ";
 	
 	public ClearTable (String user_id, String name, String pswrd, JFrame f) {
 		Object[] options = {"COURSE",
