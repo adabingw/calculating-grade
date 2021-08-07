@@ -21,6 +21,8 @@ public class ViewDatabase {
 	JFrame f;
 	backB b = new backB();
 	clearRow cr = new clearRow();
+	clearTable ct = new clearTable();
+	clearAll ca = new clearAll();
 	
 	public ViewDatabase(String user) {
 		String url = "jdbc:mysql://localhost:3306/grades";
@@ -251,6 +253,18 @@ public class ViewDatabase {
 	public class clearRow implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
 			new ClearRow(user, name, pswrd, f);
+		}
+	}
+	
+	public class clearTable implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			new ClearTable(user, name, pswrd, f);
+		}
+	}
+	
+	public class clearAll implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			new ClearAll(user, name, pswrd, f);
 		}
 	}
 }
