@@ -13,7 +13,7 @@ public class ClearAll {
 	
 	String url = "jdbc:mysql://localhost:3306/grades";
 	String username = "root";
-	String password = "Will@3229967163";
+	String password = " ";
 	
 	public ClearAll(String user_id, String name, String pswrd, JFrame f) {
 		JLabel label = new JLabel("Your grade history will be erased. Continue?");
