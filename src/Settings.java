@@ -168,40 +168,94 @@ public class Settings {
 	
 	public class changeProfileName implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
-			JTextField newProfileN = new JTextField(10);
 	 	    JLabel j = new JLabel("Change name to: ");
 			j.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-			
+		    
+	        final JButton okay = new JButton("Ok");
+	        okay.setBackground(Color.WHITE);
+	        okay.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+	        okay.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                JOptionPane pane = getOptionPane((JComponent)e.getSource());
+	                pane.setValue(okay);
+	            }
+	        });
+	        okay.setEnabled(false);
+	        
+	        final JButton cancel = new JButton("Cancel");
+	        cancel.setBackground(Color.WHITE);
+	        cancel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+	        cancel.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                JOptionPane pane = getOptionPane((JComponent)e.getSource());
+	                pane.setValue(cancel);
+	            }
+	        });
+
+	        final JTextField field = new JTextField(10);
+	        
+	        field.getDocument().addDocumentListener(new DocumentListener() {
+	            protected void update() {
+	                okay.setEnabled(field.getText().length() > 0);
+	            }
+
+	            @Override
+	            public void insertUpdate(DocumentEvent e) {
+	                update();
+	            }
+
+	            @Override
+	            public void removeUpdate(DocumentEvent e) {
+	                update();
+	            }
+
+	            @Override
+	            public void changedUpdate(DocumentEvent e) {
+	                update();
+	            }
+	        });
+	        
 		    JPanel myPanel = new JPanel();
 		    myPanel.add(Box.createHorizontalStrut(15)); // a spacer
 		    myPanel.add(j);
-		    myPanel.add(newProfileN);
+		    myPanel.add(field);
 		    
-		    int result = JOptionPane.showConfirmDialog(null, myPanel, 
-		             "CHANGE PROFILE NAME", JOptionPane.OK_CANCEL_OPTION);
-		    if (result == JOptionPane.OK_OPTION) {
-		       String newName = newProfileN.getText();
+	        int value = JOptionPane.showOptionDialog(
+	        	     null,
+	        	     myPanel,
+	        	     "CHANGE PROFILE NAME",
+	        	     JOptionPane.YES_NO_OPTION, 
+	        	     JOptionPane.QUESTION_MESSAGE, 
+	        	     null, 
+	        	     new Object[]{okay, cancel}, 
+	        	     okay);
+		    if (value == 0) {
+		       String newName = field.getText();
 		       System.out.println("New name: " + newName);
-		       try {	
-		    	   Connection connection = DriverManager.getConnection(url, username, password);
-		    	   System.out.println("connection success!!");
-				
-		    	   String sql = "UPDATE user_info SET user_name = ? WHERE user_id = ?";
-		    	   PreparedStatement statement = connection.prepareStatement(sql);
-		    	   statement.setString(1, newName);
-		    	   statement.setString(2, user_id);
-		    	   
-					int rows2 = statement.executeUpdate();
-					if (rows2 > 0) {
-						System.out.println("UPDATE PROFILE NAME!");
-					}
-				} catch (SQLException e) {
-					System.out.println("& i oop");
-					e.printStackTrace();
-		        }
+			       try {	
+			    	   Connection connection = DriverManager.getConnection(url, username, password);
+			    	   System.out.println("connection success!!");
+					
+			    	   String sql = "UPDATE user_info SET user_name = ? WHERE user_id = ?";
+			    	   PreparedStatement statement = connection.prepareStatement(sql);
+			    	   statement.setString(1, newName);
+			    	   statement.setString(2, user_id);
+			    	   
+						int rows2 = statement.executeUpdate();
+						if (rows2 > 0) {
+							System.out.println("UPDATE PROFILE NAME!");
+						}
+					} catch (SQLException e) {
+						System.out.println("& i oop");
+						e.printStackTrace();
+			        }
 		       frame.setVisible(false);
 		       new userMain(user_id, newName, pswrd);
-		}
+		   } else if (value == 1) {
+	        	JOptionPane.getRootFrame().dispose();   
+	        } else System.exit(0);
 	}}
 	
 	public class changeUsername implements ActionListener {
@@ -210,48 +264,103 @@ public class Settings {
 	 	    JLabel j = new JLabel("Change username to: ");
 			j.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 			
+	        final JButton okay = new JButton("Ok");
+	        okay.setBackground(Color.WHITE);
+	        okay.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+	        okay.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                JOptionPane pane = getOptionPane((JComponent)e.getSource());
+	                pane.setValue(okay);
+	            }
+	        });
+	        okay.setEnabled(false);
+	        
+	        final JButton cancel = new JButton("Cancel");
+	        cancel.setBackground(Color.WHITE);
+	        cancel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+	        cancel.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                JOptionPane pane = getOptionPane((JComponent)e.getSource());
+	                pane.setValue(cancel);
+	            }
+	        });
+
+	        final JTextField field = new JTextField(10);
+	        
+	        field.getDocument().addDocumentListener(new DocumentListener() {
+	            protected void update() {
+	                okay.setEnabled(field.getText().length() > 0);
+	            }
+
+	            @Override
+	            public void insertUpdate(DocumentEvent e) {
+	                update();
+	            }
+
+	            @Override
+	            public void removeUpdate(DocumentEvent e) {
+	                update();
+	            }
+
+	            @Override
+	            public void changedUpdate(DocumentEvent e) {
+	                update();
+	            }
+	        });
+	        
 		    JPanel myPanel = new JPanel();
 		    myPanel.add(Box.createHorizontalStrut(15)); // a spacer
 		    myPanel.add(j);
-		    myPanel.add(newUserN);
+		    myPanel.add(field);
 		    
-		    int result = JOptionPane.showConfirmDialog(null, myPanel, 
-		             "CHANGE USERNAME", JOptionPane.OK_CANCEL_OPTION);
-		    if (result == JOptionPane.OK_OPTION) {
+	        int value = JOptionPane.showOptionDialog(
+	        	     null,
+	        	     myPanel,
+	        	     "CHANGE USERNAME",
+	        	     JOptionPane.YES_NO_OPTION, 
+	        	     JOptionPane.QUESTION_MESSAGE, 
+	        	     null, 
+	        	     new Object[]{okay, cancel}, 
+	        	     okay);
+		    if (value == 0) {
 		       String newUser = newUserN.getText();
 		       System.out.println("New name: " + newUser);
-		       try {	
-		    	   Connection connection = DriverManager.getConnection(url, username, password);
-		    	   System.out.println("connection success!!");
-		    	   
-		    	   String sql = "SELECT * FROM user_info WHERE user_id = ?";
-		    	   PreparedStatement statement = connection.prepareStatement(sql);
-		    	   statement.setString(1, newUser);
-		    	   
-		    	   ResultSet rs = statement.executeQuery();
-		           if (!rs.next()){
-			    	   String sql1 = "UPDATE user_info SET user_id = ? WHERE user_password = ?";
-			    	   PreparedStatement statement1 = connection.prepareStatement(sql1);
-			    	   statement1.setString(1, newUser);
-			    	   statement1.setString(2, pswrd);
+			       try {	
+			    	   Connection connection = DriverManager.getConnection(url, username, password);
+			    	   System.out.println("connection success!!");
 			    	   
-						int rows2 = statement1.executeUpdate();
-						if (rows2 > 0) {
-							System.out.println("UPDATE USERNAME!");
-						}
-		           } else {
-		        	   JLabel l = new JLabel("Username has already been taken.");
-		    		   l.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		    		   l.setHorizontalAlignment(SwingConstants.CENTER);
-		    		   JOptionPane.showMessageDialog(null, l, "ERROR", JOptionPane.PLAIN_MESSAGE);
-		           }
-				} catch (SQLException e) {
-					System.out.println("& i oop");
-					e.printStackTrace();
-		        }
+			    	   String sql = "SELECT * FROM user_info WHERE user_id = ?";
+			    	   PreparedStatement statement = connection.prepareStatement(sql);
+			    	   statement.setString(1, newUser);
+			    	   
+			    	   ResultSet rs = statement.executeQuery();
+			           if (!rs.next()){
+				    	   String sql1 = "UPDATE user_info SET user_id = ? WHERE user_password = ?";
+				    	   PreparedStatement statement1 = connection.prepareStatement(sql1);
+				    	   statement1.setString(1, newUser);
+				    	   statement1.setString(2, pswrd);
+				    	   
+							int rows2 = statement1.executeUpdate();
+							if (rows2 > 0) {
+								System.out.println("UPDATE USERNAME!");
+							}
+			           } else {
+			        	   JLabel l = new JLabel("Username has already been taken.");
+			    		   l.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+			    		   l.setHorizontalAlignment(SwingConstants.CENTER);
+			    		   JOptionPane.showMessageDialog(null, l, "ERROR", JOptionPane.PLAIN_MESSAGE);
+			           }
+					} catch (SQLException e) {
+						System.out.println("& i oop");
+						e.printStackTrace();
+			        }
 		       frame.setVisible(false);
 		       new userMain(newUser, name, pswrd);
-		}
+		   } else if (value == 1) {
+	        	JOptionPane.getRootFrame().dispose();   
+	        } else System.exit(0);
 		}
 	}
 	
@@ -267,11 +376,83 @@ public class Settings {
 			Object[] message = {
 				    j, oldPswrd,
 				    j2, newPswrd,
-				};
+			};
+			
+	        final JButton okay = new JButton("Ok");
+	        okay.setBackground(Color.WHITE);
+	        okay.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+	        okay.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                JOptionPane pane = getOptionPane((JComponent)e.getSource());
+	                pane.setValue(okay);
+	            }
+	        });
+	        okay.setEnabled(false);
+	        
+	        final JButton cancel = new JButton("Cancel");
+	        cancel.setBackground(Color.WHITE);
+	        cancel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+	        cancel.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                JOptionPane pane = getOptionPane((JComponent)e.getSource());
+	                pane.setValue(cancel);
+	            }
+	        });
+	        
+	        oldPswrd.getDocument().addDocumentListener(new DocumentListener() {
+	            protected void update() {
+	                okay.setEnabled(oldPswrd.getPassword().length > 0 && newPswrd.getPassword().length > 0);
+	            }
+
+	            @Override
+	            public void insertUpdate(DocumentEvent e) {
+	                update();
+	            }
+
+	            @Override
+	            public void removeUpdate(DocumentEvent e) {
+	                update();
+	            }
+
+	            @Override
+	            public void changedUpdate(DocumentEvent e) {
+	                update();
+	            }
+	        });
+	        
+	        newPswrd.getDocument().addDocumentListener(new DocumentListener() {
+	            protected void update() {
+	                okay.setEnabled(oldPswrd.getPassword().length > 0 && newPswrd.getPassword().length > 0);
+	            }
+
+	            @Override
+	            public void insertUpdate(DocumentEvent e) {
+	                update();
+	            }
+
+	            @Override
+	            public void removeUpdate(DocumentEvent e) {
+	                update();
+	            }
+
+	            @Override
+	            public void changedUpdate(DocumentEvent e) {
+	                update();
+	            }
+	        });
 		    
-		    int result = JOptionPane.showConfirmDialog(null, message, 
-		             "CHANGE PASSWORD", JOptionPane.OK_CANCEL_OPTION);
-		    if (result == JOptionPane.OK_OPTION) {
+	        int value = JOptionPane.showOptionDialog(
+	        	     null,
+	        	     message,
+	        	     "CHANGE USERNAME",
+	        	     JOptionPane.YES_NO_OPTION, 
+	        	     JOptionPane.QUESTION_MESSAGE, 
+	        	     null, 
+	        	     new Object[]{okay, cancel}, 
+	        	     okay);
+		    if (value == 0) {
 			   char[] oldp = oldPswrd.getPassword();
 			   String oldP = String.valueOf(oldp);
 		       char[] p = newPswrd.getPassword();
@@ -310,8 +491,8 @@ public class Settings {
 					System.out.println("& i oop");
 					e.printStackTrace();
 		        }
-		       frame.setVisible(false);
-		       new userMain(user_id, name, newP);
+	       frame.setVisible(false);
+	       new userMain(user_id, name, newP);
 		}
 			
 		}
