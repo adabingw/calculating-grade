@@ -13,26 +13,37 @@ import javax.swing.SwingConstants;
 
 public class SignUpUser {
 	
+	protected JOptionPane getOptionPane(JComponent parent) {
+        	JOptionPane pane = null;
+        	if (!(parent instanceof JOptionPane)) {
+            		pane = getOptionPane((JComponent)parent.getParent());
+        	} else {
+            		pane = (JOptionPane) parent;
+        	}
+        	return pane;
+    	}
+	
+	
 	public SignUpUser() {
 		
 		String url = "jdbc:mysql://localhost:3306/grades";
 		String username = "root";
 		String password = " ";
 		
-        JPasswordField jpf = new JPasswordField(10);
- 	    JLabel jl = new JLabel("Password: ");
+        	JPasswordField jpf = new JPasswordField(10);
+ 	    	JLabel jl = new JLabel("Password: ");
 		jl.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		
 		JPasswordField jpf2 = new JPasswordField(10);
- 	    JLabel jl2 = new JLabel("Confirm password: ");
+ 	    	JLabel jl2 = new JLabel("Confirm password: ");
 		jl2.setFont(new Font("Times New Roman", Font.PLAIN, 15));
  	    
 		JTextField username1 = new JTextField(10);
-	    JLabel label = new JLabel("Username: ");
+	    	JLabel label = new JLabel("Username: ");
 		label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		
 		JTextField name = new JTextField(10);
-	    JLabel label1 = new JLabel("Name: ");
+	    	JLabel label1 = new JLabel("Name: ");
 		label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		
 		Object[] message = {
@@ -42,9 +53,124 @@ public class SignUpUser {
 				jl2, jpf2,
 		};
 	    
-	    int result = JOptionPane.showConfirmDialog(null, message, 
-	             "CREATE NEW ACCOUNT", JOptionPane.OK_CANCEL_OPTION);
-	    if (result == JOptionPane.OK_OPTION) {
+        final JButton okay = new JButton("Ok");
+        okay.setBackground(Color.WHITE);
+        okay.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        okay.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane pane = getOptionPane((JComponent)e.getSource());
+                pane.setValue(okay);
+            }
+        });
+        okay.setEnabled(false);
+        
+        final JButton cancel = new JButton("Cancel");
+        cancel.setBackground(Color.WHITE);
+        cancel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        cancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane pane = getOptionPane((JComponent)e.getSource());
+                pane.setValue(cancel);
+            }
+        });
+        
+        name.getDocument().addDocumentListener(new DocumentListener() {
+            protected void update() {
+                okay.setEnabled(name.getText().length() > 0 && username1.getText().length() > 0 && jpf.getPassword().length > 0 && jpf2.getPassword().length > 0);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                update();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                update();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                update();
+            }
+        });
+        
+        username1.getDocument().addDocumentListener(new DocumentListener() {
+            protected void update() {
+                okay.setEnabled(name.getText().length() > 0 && username1.getText().length() > 0 && jpf.getPassword().length > 0 && jpf2.getPassword().length > 0);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                update();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                update();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                update();
+            }
+        });
+        
+        jpf.getDocument().addDocumentListener(new DocumentListener() {
+            protected void update() {
+                okay.setEnabled(name.getText().length() > 0 && username1.getText().length() > 0 && jpf.getPassword().length > 0 && jpf2.getPassword().length > 0);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                update();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                update();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                update();
+            }
+        });
+        
+        jpf2.getDocument().addDocumentListener(new DocumentListener() {
+            protected void update() {
+                okay.setEnabled(name.getText().length() > 0 && username1.getText().length() > 0 && jpf.getPassword().length > 0 && jpf2.getPassword().length > 0);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                update();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                update();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                update();
+            }
+        });
+        
+        int value = JOptionPane.showOptionDialog(
+       	     null,
+       	     message,
+       	     "CREATE NEW ACCOUNT",
+       	     JOptionPane.YES_NO_OPTION, 
+       	     JOptionPane.QUESTION_MESSAGE, 
+       	     null, 
+       	     new Object[]{okay, cancel}, 
+       	     okay);
+	  
+	    if (value == 0) {
 	       String user = username1.getText();
 	       String profileName = name.getText();
 	       char[] p = jpf.getPassword();
@@ -93,9 +219,9 @@ public class SignUpUser {
 				System.out.println("& i oop");
 				e.printStackTrace();
 	        }	   
-	    } else {
+	    } else if (value == 1) {
 	    	   new Main();
-	       }
+	    } else System.exit(0);
 	    
 	    return; 
     }
