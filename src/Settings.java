@@ -38,6 +38,16 @@ public class Settings {
 	backButton b = new backButton();
 	deleteAcc da = new deleteAcc();
 	
+	protected JOptionPane getOptionPane(JComponent parent) {
+		JOptionPane pane = null;
+		if (!(parent instanceof JOptionPane)) {
+	    		pane = getOptionPane((JComponent)parent.getParent());
+		} else {
+	    		pane = (JOptionPane) parent;
+		}
+		return pane;
+    	}
+	
 	public Settings(String user_id, String name, String pswrd) {
 		this.user_id = user_id;
 		this.name = name;
