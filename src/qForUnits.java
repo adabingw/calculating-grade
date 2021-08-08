@@ -1,102 +1,304 @@
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 public class qForUnits {
-
+	
+    protected JOptionPane getOptionPane(JComponent parent) {
+        JOptionPane pane = null;
+        if (!(parent instanceof JOptionPane)) {
+            pane = getOptionPane((JComponent)parent.getParent());
+        } else {
+            pane = (JOptionPane) parent;
+        }
+        return pane;
+    }
+	
 	public int AskUnits(String courseName) {
 		JLabel label = new JLabel("How many units are in this course?");
 		label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		String NumberUnits = JOptionPane.showInputDialog(null, label, courseName, JOptionPane.PLAIN_MESSAGE);
-		if (NumberUnits != null) {
-		    try {
-		    	   int NumberofUnits = Integer.parseInt(NumberUnits); 
-					if (NumberofUnits < 0 || NumberofUnits > 100) {
-			    	    JOptionPane.showMessageDialog(null, "Input out of bounds",
-			    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
-			    	    System.exit(0);
-					}
-				    return NumberofUnits;
-		    	 } catch(NumberFormatException e) {
-		    	    JOptionPane.showMessageDialog(null, "Input is not a number",
-		    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
-		    	    System.exit(0);
-		    	 } 
-		} else 	System.exit(0);
-		return 0; 
-	} // all clear
-	
-	public String[] Unitw(int UnitNo, String courseName) {
-		String[] unitInfo = new String[2];
-		JLabel l = new JLabel("For unit " + UnitNo + ", please type in the weighting (discard the percent sign) and the name: ");
-		l.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		l.setHorizontalAlignment(SwingConstants.CENTER);
-			
-		JTextField w = new JTextField(10);
-		JLabel label = new JLabel("Weighting:");
-		label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		label.setHorizontalAlignment(SwingConstants.LEFT);
-		    
-		JTextField n = new JTextField(10);		    
-		JLabel label2 = new JLabel("Name");
-		label2.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		label2.setHorizontalAlignment(SwingConstants.LEFT);
-		    
-		Object[] message = {
-			l,
-			label, w,
-			label2, n,
-		};
-		    
-		int result = JOptionPane.showConfirmDialog(null, message, 
-		    		courseName, JOptionPane.OK_CANCEL_OPTION);
-		if (result == JOptionPane.OK_OPTION) {
-		       unitInfo[0] = w.getText();
-		       unitInfo[1] = n.getText();
-		}			
-			
-/*			String UnitwLOL = JOptionPane.showInputDialog(null, message, courseName, JOptionPane.PLAIN_MESSAGE);
-			if (UnitwLOL != null) {
-			    try {
-				    	int UnitWeightLOL = Integer.parseInt(UnitwLOL);
-						System.out.println("Unit weight is " + UnitWeightLOL + "%"); // system check
-						if (UnitWeightLOL < 0 || UnitWeightLOL > 100) {
+		
+        final JButton okay = new JButton("Ok");
+        okay.setBackground(Color.WHITE);
+        okay.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        okay.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane pane = getOptionPane((JComponent)e.getSource());
+                pane.setValue(okay);
+            }
+        });
+        okay.setEnabled(false);
+        
+        final JButton cancel = new JButton("Cancel");
+        cancel.setBackground(Color.WHITE);
+        cancel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        cancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane pane = getOptionPane((JComponent)e.getSource());
+                pane.setValue(cancel);
+            }
+        });
+
+        final JTextField field = new JTextField();
+        
+        field.getDocument().addDocumentListener(new DocumentListener() {
+            protected void update() {
+                okay.setEnabled(field.getText().length() > 0);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                update();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                update();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                update();
+            }
+        });
+        
+        Object[] message = {
+        	label, field,
+        };
+
+        int value = JOptionPane.showOptionDialog(
+        	     null,
+        	     message,
+        	     courseName,
+        	     JOptionPane.YES_NO_OPTION, 
+        	     JOptionPane.QUESTION_MESSAGE, 
+        	     null, 
+        	     new Object[]{okay, cancel}, 
+        	     okay);
+        if (value == 0) {
+	        String numberofUnits = field.getText();
+	        
+	        try {
+			   int noUnits = Integer.parseInt(numberofUnits); 
+						if (noUnits < 0 || noUnits > 100) {
 				    	    JOptionPane.showMessageDialog(null, "Input out of bounds",
 				    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
 				    	    System.exit(0);
 						}
-					    return UnitWeightLOL;
+					    return noUnits;
 			    	 } catch(NumberFormatException e) {
 			    	    JOptionPane.showMessageDialog(null, "Input is not a number",
 			    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
 			    	    System.exit(0);
-			    	 } */
-			 else 	System.exit(0);
-			return unitInfo;
+			    	 } 
+        } else if (value == 1) {
+        	JOptionPane.getRootFrame().dispose();   
+        } else System.exit(0);
+		return 0;
+	} // all clear
+	
+	public String[] Unitw(int UnitNo, String courseName) {
+			String[] unitInfo = new String[2];
+			JLabel l = new JLabel("For unit " + UnitNo + ", please type in the weighting (discard the percent sign) and the name: ");
+			l.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+			l.setHorizontalAlignment(SwingConstants.CENTER);
 			
+			JTextField w = new JTextField(10);
+		    JLabel label = new JLabel("Weighting:");
+		    label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		    label.setHorizontalAlignment(SwingConstants.LEFT);
+		    
+			JTextField n = new JTextField(10);		    
+		    JLabel label2 = new JLabel("Name");
+		    label2.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		    label2.setHorizontalAlignment(SwingConstants.LEFT);
+		    
+	        final JButton okay = new JButton("Ok");
+	        okay.setBackground(Color.WHITE);
+	        okay.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+	        okay.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                JOptionPane pane = getOptionPane((JComponent)e.getSource());
+	                pane.setValue(okay);
+	            }
+	        });
+	        okay.setEnabled(false);
+	        
+	        final JButton cancel = new JButton("Cancel");
+	        cancel.setBackground(Color.WHITE);
+	        cancel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+	        cancel.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                JOptionPane pane = getOptionPane((JComponent)e.getSource());
+	                pane.setValue(cancel);
+	            }
+	        });
+	        
+	        w.getDocument().addDocumentListener(new DocumentListener() {
+	            protected void update() {
+	                okay.setEnabled(w.getText().length() > 0 && n.getText().length() > 0);
+	            }
+
+	            @Override
+	            public void insertUpdate(DocumentEvent e) {
+	                update();
+	            }
+
+	            @Override
+	            public void removeUpdate(DocumentEvent e) {
+	                update();
+	            }
+
+	            @Override
+	            public void changedUpdate(DocumentEvent e) {
+	                update();
+	            }
+	        });
+	        
+	        n.getDocument().addDocumentListener(new DocumentListener() {
+	            protected void update() {
+	                okay.setEnabled(w.getText().length() > 0 && n.getText().length() > 0);
+	            }
+
+	            @Override
+	            public void insertUpdate(DocumentEvent e) {
+	                update();
+	            }
+
+	            @Override
+	            public void removeUpdate(DocumentEvent e) {
+	                update();
+	            }
+
+	            @Override
+	            public void changedUpdate(DocumentEvent e) {
+	                update();
+	            }
+	        });
+		    
+			Object[] message = {
+					l,
+					label, w,
+					label2, n,
+			};
+		    
+	        int value = JOptionPane.showOptionDialog(
+	        	     null,
+	        	     message,
+	        	     courseName,
+	        	     JOptionPane.YES_NO_OPTION, 
+	        	     JOptionPane.QUESTION_MESSAGE, 
+	        	     null, 
+	        	     new Object[]{okay, cancel}, 
+	        	     okay);
+			
+	        if (value == 0) {        
+		        unitInfo[0] = w.getText();
+			    unitInfo[1] = n.getText();
+	        } else if (value == 1) {
+	        	JOptionPane.getRootFrame().dispose();   
+	        } else System.exit(0);
+	        return unitInfo;
 	} // all clear
 	
 	public int AskAssign(int UnitNo, String courseName) {
 		JLabel label = new JLabel("How many assignments are in this unit?");
 		label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		String NoAssign = JOptionPane.showInputDialog(null, label, courseName + " Unit " + UnitNo, JOptionPane.PLAIN_MESSAGE);
-		if (NoAssign != null) {
-		    try {
-		    	   int AssignNo = Integer.parseInt(NoAssign); 
-				    System.out.println("Number of Assignments: " + AssignNo); // system check
-					if (AssignNo < 0 || AssignNo > 100) {
-			    	    JOptionPane.showMessageDialog(null, "Input out of bounds",
+		
+        final JButton okay = new JButton("Ok");
+        okay.setBackground(Color.WHITE);
+        okay.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        okay.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane pane = getOptionPane((JComponent)e.getSource());
+                pane.setValue(okay);
+            }
+        });
+        okay.setEnabled(false);
+        
+        final JButton cancel = new JButton("Cancel");
+        cancel.setBackground(Color.WHITE);
+        cancel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        cancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane pane = getOptionPane((JComponent)e.getSource());
+                pane.setValue(cancel);
+            }
+        });
+
+        final JTextField field = new JTextField();
+        
+        field.getDocument().addDocumentListener(new DocumentListener() {
+            protected void update() {
+                okay.setEnabled(field.getText().length() > 0);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                update();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                update();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                update();
+            }
+        });
+        
+        Object[] message = {
+        	label, field,
+        };
+
+        int value = JOptionPane.showOptionDialog(
+        	     null,
+        	     message,
+        	     courseName + " Unit " + UnitNo,
+        	     JOptionPane.YES_NO_OPTION, 
+        	     JOptionPane.QUESTION_MESSAGE, 
+        	     null, 
+        	     new Object[]{okay, cancel}, 
+        	     okay);
+        if (value == 0) {
+	        String numberofAssignments = field.getText();
+	        
+	        try {
+			   int assignmentNumber = Integer.parseInt(numberofAssignments); 
+						if (assignmentNumber < 0 || assignmentNumber > 100) {
+				    	    JOptionPane.showMessageDialog(null, "Input out of bounds",
+				    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
+				    	    System.exit(0);
+						}
+					    return assignmentNumber;
+			    	 } catch(NumberFormatException e) {
+			    	    JOptionPane.showMessageDialog(null, "Input is not a number",
 			    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
 			    	    System.exit(0);
-					}
-				    return AssignNo;
-		    	 } catch(NumberFormatException e) {
-		    	   System.out.println("input is not an int value"); 
-		    	    JOptionPane.showMessageDialog(null, "Input is not a number",
-		    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
-		    	    System.exit(0);
-		    	 } 
-		} else System.exit(0);  
+			    	 } 
+        } else if (value == 1) {
+        	JOptionPane.getRootFrame().dispose();   
+        } else System.exit(0);
 		return 0;
 	} // all clear
 	
@@ -104,80 +306,192 @@ public class qForUnits {
 
 		System.out.println("Assign is " + Assign); // system check
 		String[][] Assignments = new String[2][Assign]; 
-				
+		
 		for (int i = 0; i < Assign; i++) {
-		JTextField n = new JTextField(10);
-		JLabel label = new JLabel("Name of assignment " + (i+1) + ":");
-		label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		label.setHorizontalAlignment(SwingConstants.LEFT);
-		   
-		JTextField mark = new JTextField(10);		    
-		JLabel label2 = new JLabel("Mark of assignment " + (i+1) + ":");
-		label2.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		label2.setHorizontalAlignment(SwingConstants.LEFT);
+			JTextField n = new JTextField();
+		    JLabel label = new JLabel("Name of assignment " + (i+1) + ":");
+		    label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		    label.setHorizontalAlignment(SwingConstants.LEFT);
 		    
-		Object[] message = {
-			label, n,
-			label2, mark,
-		};
+			JTextField mark = new JTextField();		    
+		    JLabel label2 = new JLabel("Mark of assignment " + (i+1) + ":");
+		    label2.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		    label2.setHorizontalAlignment(SwingConstants.LEFT);
 		    
-		int result = JOptionPane.showConfirmDialog(null, message, courseName + " Unit " + UnitNo
-		             , JOptionPane.OK_CANCEL_OPTION);
-		if (result == JOptionPane.OK_OPTION) {
+	        final JButton okay = new JButton("Ok");
+	        okay.setBackground(Color.WHITE);
+	        okay.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+	        okay.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                JOptionPane pane = getOptionPane((JComponent)e.getSource());
+	                pane.setValue(okay);
+	            }
+	        });
+	        okay.setEnabled(false);
+	        
+	        final JButton cancel = new JButton("Cancel");
+	        cancel.setBackground(Color.WHITE);
+	        cancel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+	        cancel.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                JOptionPane pane = getOptionPane((JComponent)e.getSource());
+	                pane.setValue(cancel);
+	            }
+	        });
+	        
+	        mark.getDocument().addDocumentListener(new DocumentListener() {
+	            protected void update() {
+	                okay.setEnabled(mark.getText().length() > 0 && n.getText().length() > 0);
+	            }
+
+	            @Override
+	            public void insertUpdate(DocumentEvent e) {
+	                update();
+	            }
+
+	            @Override
+	            public void removeUpdate(DocumentEvent e) {
+	                update();
+	            }
+
+	            @Override
+	            public void changedUpdate(DocumentEvent e) {
+	                update();
+	            }
+	        });
+	        
+	        n.getDocument().addDocumentListener(new DocumentListener() {
+	            protected void update() {
+	                okay.setEnabled(mark.getText().length() > 0 && n.getText().length() > 0);
+	            }
+
+	            @Override
+	            public void insertUpdate(DocumentEvent e) {
+	                update();
+	            }
+
+	            @Override
+	            public void removeUpdate(DocumentEvent e) {
+	                update();
+	            }
+
+	            @Override
+	            public void changedUpdate(DocumentEvent e) {
+	                update();
+	            }
+	        });
+		    
+			Object[] message = {
+					label, n,
+					label2, mark,
+			};
+			
+			int value = JOptionPane.showOptionDialog(
+	        	     null,
+	        	     message,
+	        	     courseName + " Unit " + UnitNo,
+	        	     JOptionPane.YES_NO_OPTION, 
+	        	     JOptionPane.QUESTION_MESSAGE, 
+	        	     null, 
+	        	     new Object[]{okay, cancel}, 
+	        	     okay);
+		    
+		    if (value == 0) {
 		       Assignments[0][i] = mark.getText();
 		       Assignments[1][i] = n.getText();
-		} else System.exit(0);
+		    } else if (value == 1) {
+	        	JOptionPane.getRootFrame().dispose();   
+	        } else System.exit(0); 
 		}
 		return Assignments;
 	}
-/*			JLabel label = new JLabel("Mark of Assignment "+ (i+1));
-			label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-			label.setHorizontalAlignment(SwingConstants.CENTER);
-			Assignments[i] = JOptionPane.showInputDialog(null, label, courseName + " Unit " + UnitNo, JOptionPane.PLAIN_MESSAGE);						
-			if (Assignments[i] != null) {
-			    
-				try {
-					AssignmentsLOL[i] = Integer.parseInt(Assignments[i]);
-					
-				    System.out.println("Assignment mark is " + AssignmentsLOL[i]); // system check
-					if (AssignmentsLOL[i] < 0 || AssignmentsLOL[i] > 100) {
+	
+	public int InputUnitFinal(int UnitNo, String courseName) {
+		JLabel label = new JLabel("Input your unit final mark: ");
+		label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		
+        final JButton okay = new JButton("Ok");
+        okay.setBackground(Color.WHITE);
+        okay.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        okay.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane pane = getOptionPane((JComponent)e.getSource());
+                pane.setValue(okay);
+            }
+        });
+        okay.setEnabled(false);
+        
+        final JButton cancel = new JButton("Cancel");
+        cancel.setBackground(Color.WHITE);
+        cancel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        cancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane pane = getOptionPane((JComponent)e.getSource());
+                pane.setValue(cancel);
+            }
+        });
+
+        final JTextField field = new JTextField();
+        
+        field.getDocument().addDocumentListener(new DocumentListener() {
+            protected void update() {
+                okay.setEnabled(field.getText().length() > 0);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                update();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                update();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                update();
+            }
+        });
+        
+        Object[] message = {
+        	label, field,
+        };
+
+        int value = JOptionPane.showOptionDialog(
+        	     null,
+        	     message,
+        	     courseName + " Unit " + UnitNo,
+        	     JOptionPane.YES_NO_OPTION, 
+        	     JOptionPane.QUESTION_MESSAGE, 
+        	     null, 
+        	     new Object[]{okay, cancel}, 
+        	     okay);
+        if (value == 0) {
+	        String unitFinal = field.getText();
+	        
+	        try {
+			   int unitFinalMark = Integer.parseInt(unitFinal); 
+						if (unitFinalMark < 0 || unitFinalMark > 100) {
 				    	    JOptionPane.showMessageDialog(null, "Input out of bounds",
 				    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
 				    	    System.exit(0);
 						}
+					    return unitFinalMark;
 			    	 } catch(NumberFormatException e) {
-			    	   System.out.println("input is not an int value"); 
 			    	    JOptionPane.showMessageDialog(null, "Input is not a number",
 			    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
 			    	    System.exit(0);
-			    	 }
-				} else System.exit(0);
-		}
-		return AssignmentsLOL;
-	} */
-	
-	public int InputUnitFinal(int UnitNo, String courseName) {
-			JLabel label = new JLabel("Input your unit final mark: ");
-			label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-			label.setHorizontalAlignment(SwingConstants.CENTER);
-			String UnitF = JOptionPane.showInputDialog(null, label, courseName + " Unit " + UnitNo, JOptionPane.PLAIN_MESSAGE);
-			if (UnitF != null) {				
-			    try {
-				    int UnitFinale = Integer.parseInt(UnitF);
-				    System.out.println("Unit final: " + UnitFinale); // system check
-					if (UnitFinale < 0 || UnitFinale > 100) {
-				    	    JOptionPane.showMessageDialog(null, "Input out of bounds",
-				    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
-				    	    System.exit(0);
-						}
-					return UnitFinale;			    	 
-				} catch(NumberFormatException e) {
-			        JOptionPane.showMessageDialog(null, "Input is not a number",
-			    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
-			        System.exit(0);
 			    	 } 
-			} else System.exit(0);
-			return 0;
+        } else if (value == 1) {
+        	JOptionPane.getRootFrame().dispose();   
+        } else System.exit(0);
+		return 0;
 	}
 	
 }
