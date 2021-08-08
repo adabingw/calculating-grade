@@ -46,11 +46,12 @@ public class averageAllCourses {
 						System.out.println("COURSE_ID ASSIGNMENTS UPDATE SUCCESSFUL!");
 					} 
 					
-					String sql2 = "INSERT INTO course (COURSE_NAME, COURSE_MARK, USER_ID) VALUES (?, ?, ?)";
+					String sql2 = "INSERT INTO course (COURSE_NAME, COURSE_MARK, USER_ID, COURSE_ID) VALUES (?, ?, ?, ?)";
 					PreparedStatement statement2 = connection.prepareStatement(sql2);
 					statement2.setString(1, CNames[i]);
 					statement2.setInt(2, avg[i]);
 					statement2.setString(3, user_id);
+					statement2.setInt(4, i+1);
 					
 					int rows2 = statement2.executeUpdate();
 					if (rows2 > 0) {
