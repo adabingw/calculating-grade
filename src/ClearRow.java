@@ -1,3 +1,5 @@
+// code not deleted because I worked hard on it (lol) and it actually works...I just have something different
+/*
 import javax.swing.JFrame;
 import java.awt.Color;
 import javax.swing.JPanel;
