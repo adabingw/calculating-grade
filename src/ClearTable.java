@@ -18,7 +18,8 @@ public class ClearTable {
 	public ClearTable (String user_id, String name, String pswrd, JFrame f) {
 		Object[] options = {"COURSE",
                 "UNIT",
-                "ASSIGNMENT"
+                "ASSIGNMENT",
+		"CANCEL"
                 };
 		JLabel label = new JLabel("Select table to clear");
 		label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
@@ -156,6 +157,8 @@ public class ClearTable {
 				JOptionPane.getRootFrame().dispose();   
 			}
 			
-		} else System.exit(0);		
+		} else if (n == 3) {
+			JOptionPane.getRootFrame().dispose();
+		}
 	}
 }
