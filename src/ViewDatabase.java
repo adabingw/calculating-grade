@@ -20,7 +20,7 @@ public class ViewDatabase {
 	String pswrd;
 	JFrame f;
 	backB b = new backB();
-	clearRow cr = new clearRow();
+//	clearRow cr = new clearRow();
 	clearTable ct = new clearTable();
 	clearAll ca = new clearAll();
 	JPopupMenu rightClick;
@@ -230,10 +230,10 @@ public class ViewDatabase {
  		  clearAll.addActionListener(ca);
  		  clearAll.setBackground(Color.WHITE);
  			
- 		  JButton clearSelected = new JButton("CLEAR ROWS");
- 		  clearSelected.setFont(new Font("Times New Roman", Font.PLAIN, 12));
- 		  clearSelected.addActionListener(cr);
- 		  clearSelected.setBackground(Color.WHITE);
+// 		  JButton clearSelected = new JButton("CLEAR ROWS");
+// 		  clearSelected.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+// 		  clearSelected.addActionListener(cr);
+// 		  clearSelected.setBackground(Color.WHITE);
  			
  		  JButton clearTable = new JButton("CLEAR TABLE");
  		  clearTable.setFont(new Font("Times New Roman", Font.PLAIN, 12));
@@ -264,7 +264,7 @@ public class ViewDatabase {
 		p.add(clearAll, gbc);
 		gbc.gridx = 2;
 		gbc.gridy = 0;
-		p.add(clearSelected, gbc);
+//		p.add(clearSelected, gbc);
 		gbc.gridx = 3;
 		gbc.gridy = 0;
 		p.add(clearTable, gbc);
@@ -320,11 +320,11 @@ public class ViewDatabase {
 		}
 	}
 	
-	public class clearRow implements ActionListener {
+/*	public class clearRow implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
 			new ClearRow(user, name, pswrd, f);
 		}
-	}
+	} */
 	
 	public class clearTable implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
@@ -357,6 +357,13 @@ public class ViewDatabase {
 		public void actionPerformed(ActionEvent event) {
 			System.out.println("ChangeVal clicked");
 			new ChangeVal(column, obj, tableNumber, f, user, name, pswrd);
+		}
+	}
+	
+	public class deleteVal implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			System.out.println("DeleteVal clicked");
+			new DeleteVal(column, obj, tableNumber, f, user, name, pswrd);
 		}
 	}
 }
