@@ -31,7 +31,11 @@ public class ViewDatabase {
 	JTable jt, jt1, jt2;
 	int tableNumber;
 	
-	public ViewDatabase(String user) {
+	public ViewDatabase(String user_id, String name, String pswrd) {
+		user = user_id;
+		this.name = name;
+		this.pswrd = pswrd;
+		
 		String url = "jdbc:mysql://localhost:3306/grades";
 		String username = "root";
 		String password = " ";
