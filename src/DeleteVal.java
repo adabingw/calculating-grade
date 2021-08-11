@@ -45,42 +45,42 @@ public class DeleteVal {
             	   int i = Integer.parseInt((String) o );
             	   int x = Integer.parseInt((String) o1 );
 
-		    	   String sql = "DELETE FROM unit WHERE unit_id = ? && course_id = ?";
-		    	   PreparedStatement statement = connection.prepareStatement(sql);
-		    	   statement.setInt(1, i);
-		    	   statement.setInt(2, x);
+		   String sql = "DELETE FROM unit WHERE unit_id = ? && course_id = ?";
+		   PreparedStatement statement = connection.prepareStatement(sql);
+		   statement.setInt(1, x);
+		   statement.setInt(2, i);
 		    	   
-					int rows = statement.executeUpdate();
-	
-					if (rows > 0) {
-						f.setVisible(false);
-						new ViewDatabase(user_id, name, pswrd);
-						System.out.println("DELETEVAL");
-					}
+		   int rows = statement.executeUpdate();
+
+		   if (rows > 0) {
+			f.setVisible(false);
+			new ViewDatabase(user_id, name, pswrd);
+			System.out.println("DELETEVAL");
+		   }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                } else if (tableNo == 3) {
       	    	   int i = Integer.parseInt((String) o );
     	    	   int x = Integer.parseInt((String) o1 );
     	    	   int j = Integer.parseInt((String) o2 );
-		    	   String sql = "DELETE FROM assignments WHERE course_id = ? && unit_id = ? && assign_id = ?";
-		    	   PreparedStatement statement = connection.prepareStatement(sql);
-		    	   statement.setInt(1, i);
-		    	   statement.setInt(2, x);
-		    	   statement.setInt(3, j);
-		    	   
-					int rows = statement.executeUpdate();
-	
-					if (rows > 0) {
-						f.setVisible(false);
-						new ViewDatabase(user_id, name, pswrd);
-						System.out.println("DELETEVAL");
-					}
+		   String sql = "DELETE FROM assignments WHERE course_id = ? && unit_id = ? && assign_id = ?";
+		   PreparedStatement statement = connection.prepareStatement(sql);
+		   statement.setInt(1, i);
+		   statement.setInt(2, x);
+		   statement.setInt(3, j);
+
+		   int rows = statement.executeUpdate();
+
+		   if (rows > 0) {
+			f.setVisible(false);
+			new ViewDatabase(user_id, name, pswrd);
+			System.out.println("DELETEVAL");
+		   }
                }
                
-			 } catch (SQLException e) {
-				System.out.println("& i oop");
-				e.printStackTrace();
-	        }
+		} catch (SQLException e) {
+			System.out.println("& i oop");
+			e.printStackTrace();
+		}
 			
 		}
 	}
