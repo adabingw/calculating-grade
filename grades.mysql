@@ -7,7 +7,7 @@ USE grades;
 CREATE TABLE course (
   course_id int NOT NULL AUTO_INCREMENT,
   course_name VARCHAR(20),
-  course_mark int NOT NULL,
+  course_mark int NOT NULL DEFAULT 0,
   user_id VARCHAR(20) NOT NULL
   PRIMARY KEY (course_id, user_id)
   );
