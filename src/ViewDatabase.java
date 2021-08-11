@@ -24,10 +24,11 @@ public class ViewDatabase {
 	clearTable ct = new clearTable();
 	clearAll ca = new clearAll();
 	JPopupMenu rightClick;
+	insert in = new insert();
 	changeVal cv = new changeVal();
 	deleteVal dv = new deleteVal();
 	int column;
-	Object obj;
+	Object obj, obj1, obj2;
 	JTable jt, jt1, jt2;
 	int tableNumber;
 	
@@ -92,24 +93,24 @@ public class ViewDatabase {
 		    };
 		    jt.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		   
-   		    jt.getTableHeader().setReorderingAllowed(false);
+  		    jt.getTableHeader().setReorderingAllowed(false);
 		    
 		    jt.addMouseListener(new MouseAdapter() {
 		    	  public void mouseClicked(MouseEvent e) {
 		    	      JTable target = (JTable)e.getSource();
 		    	      int row = target.getSelectedRow();
 		    	      column = target.getSelectedColumn();
-		    	      obj = jt.getValueAt(row, column);
+		    	      obj = jt.getValueAt(row, 0);
 		    	      System.out.println(obj);
 		    	      System.out.println(row);
 		    	      System.out.println(column);
 		    	      System.out.println("left click!");
 		    	      if (column == 1) {
 			    	      if(e.getButton() == MouseEvent.BUTTON3) {
-						System.out.println("Add menu!");
-			    	     		displayPopup();
-			    	     		tableNumber = 1;
-			    	     		rightClick.show(e.getComponent(), e.getX(), e.getY());
+			    	     	System.out.println("Add menu!");
+			    	     	displayPopup();
+			    	     	tableNumber = 1;
+			    	     	rightClick.show(e.getComponent(), e.getX(), e.getY());
 			    	      }
 		    	      }
 		    	 }
@@ -148,25 +149,26 @@ public class ViewDatabase {
 		  jt1.getTableHeader().setReorderingAllowed(false);
 			    
 		  jt1.addMouseListener(new MouseAdapter() {
-		    	  public void mouseClicked(MouseEvent e) {
-			    	      JTable target = (JTable)e.getSource();
-			    	      int row = target.getSelectedRow();
-			    	      column = target.getSelectedColumn();
-			    	      obj = jt1.getValueAt(row, column);
-			    	      System.out.println(obj);
-			    	      System.out.println(row);
-			    	      System.out.println(column);
-			    	      System.out.println("left click!");
-			    	      if (column == 2 || column == 3 || column == 5) {
-				    	      if(e.getButton() == MouseEvent.BUTTON3) {
-				    	     	System.out.println("Add menu!");
-				    	     	displayPopup();
-				    	     	tableNumber = 2;
-				    	     	rightClick.show(e.getComponent(), e.getX(), e.getY());
-				    	      }
-			    	      }
-			   }
-		  });
+			  public void mouseClicked(MouseEvent e) {
+			      JTable target = (JTable)e.getSource();
+			      int row = target.getSelectedRow();
+			      column = target.getSelectedColumn();
+			      obj = jt1.getValueAt(row, 0);
+			      obj1 = jt1.getValueAt(row, 1);
+			      System.out.println(obj);
+			      System.out.println(row);
+			      System.out.println(column);
+			      System.out.println("left click!");
+			      if (column == 2 || column == 3 || column == 5) {
+				      if(e.getButton() == MouseEvent.BUTTON3) {
+					System.out.println("Add menu!");
+					displayPopup();
+					tableNumber = 2;
+					rightClick.show(e.getComponent(), e.getX(), e.getY());
+				      }
+			      }
+			 }
+		    });
 		
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		    
 			    
@@ -197,23 +199,25 @@ public class ViewDatabase {
 		   };
 		  jt2.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		  jt2.addMouseListener(new MouseAdapter() {
-		    	  public void mouseClicked(MouseEvent e) {
-			    	      JTable target = (JTable)e.getSource();
-			    	      int row = target.getSelectedRow();
-			    	      column = target.getSelectedColumn();
-			    	      obj = jt2.getValueAt(row, column);
-			    	      System.out.println(obj);
-			    	      System.out.println(row);
-			    	      System.out.println(column);
-			    	      System.out.println("left click!");
-			    	      if (column == 3 || column == 6) {
-				    	      if(e.getButton() == MouseEvent.BUTTON3) {
-					    	     	System.out.println("Add menu!");
-					    	     	displayPopup();
-					    	     	tableNumber = 3;
-					    	     	rightClick.show(e.getComponent(), e.getX(), e.getY());
-				    	      }
-			    	      }
+			  public void mouseClicked(MouseEvent e) {
+			      JTable target = (JTable)e.getSource();
+			      int row = target.getSelectedRow();
+			      column = target.getSelectedColumn();
+			      obj = jt2.getValueAt(row, 0);
+			      obj1 = jt2.getValueAt(row, 1);
+			      obj2 = jt2.getValueAt(row, 2);
+			      System.out.println(obj);
+			      System.out.println(row);
+			      System.out.println(column);
+			      System.out.println("left click!");
+			      if (column == 3 || column == 6) {
+				      if(e.getButton() == MouseEvent.BUTTON3) {
+					System.out.println("Add menu!");
+					displayPopup();
+					tableNumber = 3;
+					rightClick.show(e.getComponent(), e.getX(), e.getY());
+				      }
+			      }
 			 }
 		  });
 			    
@@ -357,6 +361,30 @@ public class ViewDatabase {
 		f.add(rightClick);
 	}
 	
+	public class insert implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			Object[] options = {"New Course",
+		                "New unit",
+		                "New assignment"
+            	};
+		JLabel label = new JLabel("INSERT");
+		label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+
+		int n = JOptionPane.showOptionDialog(null, label, null,
+					JOptionPane.YES_NO_CANCEL_OPTION,
+					JOptionPane.QUESTION_MESSAGE,
+					null,
+					options,
+					options[1]);
+		if (n == 0) {
+			new InsertCourse(user, name, pswrd, f);
+		} else if (n == 2) {
+			new InsertAssignment(user, name, pswrd, f);
+		}
+		}
+	}
+	
 	public class changeVal implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
 			System.out.println("ChangeVal clicked");
@@ -367,7 +395,7 @@ public class ViewDatabase {
 	public class deleteVal implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
 			System.out.println("DeleteVal clicked");
-			new DeleteVal(column, obj, tableNumber, f, user, name, pswrd);
+			new DeleteVal(column, obj, obj1, obj2, tableNumber, f, user, name, pswrd);
 		}
 	}
 }
