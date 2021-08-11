@@ -15,7 +15,7 @@ public class DeleteVal {
 	String username = "root";
 	String password = "root";
 	
-	public DeleteVal(int c, Object o, int tableNo, JFrame f, String user_id, String name, String pswrd) {
+	public DeleteVal(int c, Object o, Object o1, Object o2, int tableNo, JFrame f, String user_id, String name, String pswrd) {
 		JLabel label = new JLabel("Are you sure?");
 		label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -28,9 +28,10 @@ public class DeleteVal {
 	    	   System.out.println("connection success!!");
 	    	   
                if (tableNo == 1) {
-		    	   String sql = "DELETE FROM course WHERE course_name = ?";
+    	    	   int i = Integer.parseInt((String) o );
+		    	   String sql = "DELETE FROM course WHERE course_id = ?";
 		    	   PreparedStatement statement = connection.prepareStatement(sql);
-		    	   statement.setString(1, (String) o);
+		    	   statement.setInt(1, i);
 		    	   
 					int rows = statement.executeUpdate();
 	
@@ -41,73 +42,39 @@ public class DeleteVal {
 					}
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                } else if (tableNo == 2) {
-            	   if (c == 2) {
-            		   int i = Integer.valueOf((String) o);
-			    	   String sql = "DELETE FROM unit WHERE unit_w = ?";
-			    	   PreparedStatement statement = connection.prepareStatement(sql);
-			    	   statement.setInt(1, i);
-			    	   
-						int rows = statement.executeUpdate();
-		
-						if (rows > 0) {
-							f.setVisible(false);
-							new ViewDatabase(user_id, name, pswrd);
-							System.out.println("DELETEVAL");
-						}
-            	   } else if (c == 3) {
-            		   int i = Integer.valueOf((String) o);
-			    	   String sql = "DELETE FROM unit WHERE unit_final = ?";
-			    	   PreparedStatement statement = connection.prepareStatement(sql);
-			    	   statement.setInt(1, i);
-			    	   
-						int rows = statement.executeUpdate();
-		
-						if (rows > 0) {
-							f.setVisible(false);
-							new ViewDatabase(user_id, name, pswrd);
-							System.out.println("DELETEVAL");
-						}
-            	   } else if (c == 5) {
-			    	   String sql = "DELETE FROM unit WHERE unit_name = ?";
-			    	   PreparedStatement statement = connection.prepareStatement(sql);
-			    	   statement.setString(1, (String) o);
-			    	   
-						int rows = statement.executeUpdate();
-		
-						if (rows > 0) {
-							f.setVisible(false);
-							new ViewDatabase(user_id, name, pswrd);
-							System.out.println("DELETEVAL");
-						}
-            	   }
+            	   int i = Integer.parseInt((String) o );
+            	   int x = Integer.parseInt((String) o1 );
+
+		    	   String sql = "DELETE FROM unit WHERE unit_id = ? && course_id = ?";
+		    	   PreparedStatement statement = connection.prepareStatement(sql);
+		    	   statement.setInt(1, i);
+		    	   statement.setInt(2, x);
+		    	   
+					int rows = statement.executeUpdate();
+	
+					if (rows > 0) {
+						f.setVisible(false);
+						new ViewDatabase(user_id, name, pswrd);
+						System.out.println("DELETEVAL");
+					}
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                } else if (tableNo == 3) {
-            	   if (c == 3) {
-            		   int i = Integer.valueOf((String) o);
-			    	   String sql = "DELETE FROM assignments WHERE assign_mark = ?";
-			    	   PreparedStatement statement = connection.prepareStatement(sql);
-			    	   statement.setInt(1, i);
-			    	   
-						int rows = statement.executeUpdate();
-		
-						if (rows > 0) {
-							f.setVisible(false);
-							new ViewDatabase(user_id, name, pswrd);
-							System.out.println("DELETEVAL");
-						}
-            	   } else if (c == 6) {
-			    	   String sql = "DELETE FROM assignments WHERE assign_name = ?";
-			    	   PreparedStatement statement = connection.prepareStatement(sql);
-			    	   statement.setString(1, (String) o);
-			    	   
-						int rows = statement.executeUpdate();
-		
-						if (rows > 0) {
-							f.setVisible(false);
-							new ViewDatabase(user_id, name, pswrd);
-							System.out.println("DELETEVAL");
-						}
-            	   }
+      	    	   int i = Integer.parseInt((String) o );
+    	    	   int x = Integer.parseInt((String) o1 );
+    	    	   int j = Integer.parseInt((String) o2 );
+		    	   String sql = "DELETE FROM assignments WHERE course_id = ? && unit_id = ? && assign_id = ?";
+		    	   PreparedStatement statement = connection.prepareStatement(sql);
+		    	   statement.setInt(1, i);
+		    	   statement.setInt(2, x);
+		    	   statement.setInt(3, j);
+		    	   
+					int rows = statement.executeUpdate();
+	
+					if (rows > 0) {
+						f.setVisible(false);
+						new ViewDatabase(user_id, name, pswrd);
+						System.out.println("DELETEVAL");
+					}
                }
                
 			 } catch (SQLException e) {
