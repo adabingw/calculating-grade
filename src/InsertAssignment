@@ -1,0 +1,118 @@
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class InsertAssignment {
+
+	JFrame frame, f;
+	JComboBox<String> comboBox, comboBox1;
+	String user, name, pswrd;
+	
+	String url = "jdbc:mysql://localhost:3306/grades";
+	String username = "root";
+	String password = "root";
+	int id, u_id;
+	String courseName;
+	String[] unitNames;
+	okClick ok = new okClick();
+	
+	public InsertAssignment(String user, String name, String pswrd, JFrame f) {
+		this.user = user;
+		this.name = name;
+		this.pswrd = pswrd;
+		this.f = f;
+		frame = new JFrame();
+		frame.getContentPane().setBackground(Color.WHITE);
+		frame.getContentPane().setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.WHITE);
+		panel.setBounds(26, 42, 381, 147);
+		frame.getContentPane().add(panel);
+		panel.setLayout(null);
+		
+		JLabel deleteRowsFrom = new JLabel("Insert into");
+		deleteRowsFrom.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		deleteRowsFrom.setBounds(56, 43, 63, 13);
+		panel.add(deleteRowsFrom);
+		
+		comboBox = new JComboBox<>();
+		comboBox.setBackground(Color.WHITE);
+		comboBox.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		comboBox.setBounds(122, 39, 121, 21);
+
+		panel.add(comboBox);
+		
+		JButton okButton = new JButton("OK");
+		okButton.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		okButton.setForeground(new Color(0, 0, 0));
+		okButton.setBackground(Color.WHITE);
+		okButton.addActionListener(ok);
+		okButton.setBounds(219, 116, 63, 21);
+		panel.add(okButton);
+		
+		JButton cancelButton = new JButton("CANCEL");
+		cancelButton.setBackground(Color.WHITE);
+		cancelButton.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		cancelButton.setBounds(286, 116, 85, 21);
+//		cancelButton.addActionListener(cancel);
+		panel.add(cancelButton);
+		
+		try {
+	           Connection connection = DriverManager.getConnection(url, username, password);
+		 	   String sql = "SELECT MAX(course_id) as MAXID FROM course";
+		 	   PreparedStatement statement = connection.prepareStatement(sql);
+		 	   
+		 	   ResultSet rs = statement.executeQuery();
+		 	   
+		 	   while(rs.next()) {
+		 		   id = rs.getInt("MAXID");
+		 		   System.out.println(id);
+		 		   
+			 	   for (int i = 1; i < id+1; i ++) {
+				 	   String sql1 = "SELECT course_name FROM course WHERE course_id = ?";
+				 	   PreparedStatement statement1 = connection.prepareStatement(sql1);
+				 	   statement1.setInt(1, i);
+				 	   
+				 	   ResultSet rs1 = statement1.executeQuery();
+				 	   
+				 	   while(rs1.next()) {
+				 		   courseName = rs1.getString("course_name");
+					 	   System.out.println(courseName);
+					 	   comboBox.addItem(courseName);
+				 	   }
+			 	   }
+		 	   }
+		
+			} catch (SQLException e) {
+				System.out.println("& i oop");
+				e.printStackTrace();
+			}
+		
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+	}
+	
+	public class okClick implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			frame.setVisible(false);
+			String coursePick = comboBox.getSelectedItem().toString();
+			System.out.println(coursePick);
+	 	   new InsertAssignment2(user, name, pswrd, f, coursePick);
+	}}
+}
