@@ -27,6 +27,7 @@ public class InsertAssignment {
 	String courseName;
 	String[] unitNames;
 	okClick ok = new okClick();
+	cancelB cancel = new cancelB();
 	
 	public InsertAssignment(String user, String name, String pswrd, JFrame f) {
 		this.user = user;
@@ -67,7 +68,7 @@ public class InsertAssignment {
 		cancelButton.setBackground(Color.WHITE);
 		cancelButton.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		cancelButton.setBounds(286, 116, 85, 21);
-//		cancelButton.addActionListener(cancel);
+		cancelButton.addActionListener(cancel);
 		panel.add(cancelButton);
 		
 		try {
@@ -115,4 +116,10 @@ public class InsertAssignment {
 			System.out.println(coursePick);
 	 	   new InsertAssignment2(user, name, pswrd, f, coursePick);
 	}}
+	
+	public class cancelB implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			frame.setVisible(false);
+		}
+	}
 }
