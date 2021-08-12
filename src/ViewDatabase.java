@@ -50,6 +50,7 @@ public class ViewDatabase {
 		model1.addColumn("UNIT WEIGHT");
 		model1.addColumn("UNIT FINAL");
 		model1.addColumn("COURSE NAME");
+		model1.addColumn("UNIT MARK");
 		DefaultTableModel model2 = new DefaultTableModel();
 		model2.addColumn("COURSE ID");
 		model2.addColumn("UNIT ID");
@@ -118,23 +119,25 @@ public class ViewDatabase {
 		    
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
 		    
-	 	   String sql1 = "SELECT course_id, course_name, unit_w, unit_id, unit_final FROM unit WHERE user_id = ?";
-	 	   PreparedStatement statement1 = connection.prepareStatement(sql1);
-		   statement1.setString(1, user);
-		 	   
+		   String sql1 = "SELECT course_id, course_name, unit_w, unit_id, unit_final, unit_name, unit_mark FROM unit WHERE user_id = ? ORDER BY UNIT_ID";
+		   PreparedStatement statement1 = connection.prepareStatement(sql1);
+			statement1.setString(1, user);
+
 		   ResultSet rs1 = statement1.executeQuery();
-		 	   
-		 	   
-	 	   while(rs1.next()) {
-	 		   String cID = rs1.getString("course_id");
-	 		   String uID = rs1.getString("unit_id");
-	 		   String uW = rs1.getString("unit_w");
-	 		   String uFINAL = rs1.getString("unit_final");
-	 		   String cNAME = rs1.getString("course_name");
-		 		   
-	                   String[] data = {cID, uID, uW, uFINAL, cNAME};
-		            
-		           model1.addRow(data);
+
+
+		   while(rs1.next()) {
+			   String cID = rs1.getString("course_id");
+			   String uID = rs1.getString("unit_id");
+			   String uW = rs1.getString("unit_w");
+			   String uFINAL = rs1.getString("unit_final");
+			   String cNAME = rs1.getString("course_name");
+			   String uNAME = rs1.getString("unit_name");
+			   String uMARK = rs1.getString("unit_mark");
+
+		    String[] data = {cID, uID, uW, uFINAL, cNAME, uNAME, uMARK};
+
+		   model1.addRow(data);
 		   }
 		 	   
 		  jt1 = new JTable(model1) {
@@ -379,6 +382,8 @@ public class ViewDatabase {
 					options[1]);
 		if (n == 0) {
 			new InsertCourse(user, name, pswrd, f);
+		} else if (n == 1) {
+			new insertUnit(user, name, pswrd, f);
 		} else if (n == 2) {
 			new InsertAssignment(user, name, pswrd, f);
 		}
