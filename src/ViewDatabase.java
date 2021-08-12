@@ -393,7 +393,7 @@ public class ViewDatabase {
 	public class changeVal implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
 			System.out.println("ChangeVal clicked");
-			new ChangeVal(column, obj, tableNumber, f, user, name, pswrd);
+			new ChangeVal(column, obj, obj1, obj2, tableNumber, f, user, name, pswrd);
 		}
 	}
 	
