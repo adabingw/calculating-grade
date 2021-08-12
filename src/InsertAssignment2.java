@@ -32,6 +32,8 @@ public class InsertAssignment2 {
 	String[] unitNames;
 	String courseName;
 	okClick ok = new okClick();
+	backB back = new backB();
+	cancelB c = new cancelB();
 	
 	protected JOptionPane getOptionPane(JComponent parent) {
 	     JOptionPane pane = null;
@@ -83,7 +85,7 @@ public class InsertAssignment2 {
 		cancelButton.setBackground(Color.WHITE);
 		cancelButton.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		cancelButton.setBounds(286, 116, 85, 21);
-//		cancelButton.addActionListener(cancel);
+		cancelButton.addActionListener(cancel);
 		panel.add(cancelButton);
 		
 		JButton btnBack = new JButton("BACK");
@@ -91,6 +93,7 @@ public class InsertAssignment2 {
 		btnBack.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		btnBack.setBackground(Color.WHITE);
 		btnBack.setBounds(134, 116, 78, 21);
+		btnBack.addActionListener(back);
 		panel.add(btnBack);
 		
 		try {
@@ -135,7 +138,7 @@ public class InsertAssignment2 {
 		
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    frame.setResizable(false);
+	    	frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
@@ -145,96 +148,96 @@ public class InsertAssignment2 {
 			frame.setVisible(false);
 			String unitPick = comboBox.getSelectedItem().toString();
 			
-		    JLabel j = new JLabel("Enter new assignment name: ");
+		    	JLabel j = new JLabel("Enter new assignment name: ");
 			j.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 			
 			JLabel j1 = new JLabel("Enter new assignment mark: ");
 			j1.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		    
-	        final JButton okay = new JButton("Ok");
-	        okay.setBackground(Color.WHITE);
-	        okay.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-	        okay.addActionListener(new ActionListener() {
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	                JOptionPane pane = getOptionPane((JComponent)e.getSource());
-	                pane.setValue(okay);
-	            }
-	        });
-	        okay.setEnabled(false);
-	        
-	        final JButton cancel = new JButton("Cancel");
-	        cancel.setBackground(Color.WHITE);
-	        cancel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-	        cancel.addActionListener(new ActionListener() {
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	                JOptionPane pane = getOptionPane((JComponent)e.getSource());
-	                pane.setValue(cancel);
-	            }
-	        });
+			final JButton okay = new JButton("Ok");
+			okay.setBackground(Color.WHITE);
+			okay.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+			okay.addActionListener(new ActionListener() {
+			    @Override
+			    public void actionPerformed(ActionEvent e) {
+				JOptionPane pane = getOptionPane((JComponent)e.getSource());
+				pane.setValue(okay);
+			    }
+			});
+			okay.setEnabled(false);
 
-	        final JTextField field = new JTextField(10);
-	        
-	        final JTextField field2 = new JTextField(10);
-	        
-	        field.getDocument().addDocumentListener(new DocumentListener() {
-	            protected void update() {
-	                okay.setEnabled(field.getText().length() > 0 && field2.getText().length() > 0);
-	            }
+			final JButton cancel = new JButton("Cancel");
+			cancel.setBackground(Color.WHITE);
+			cancel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+			cancel.addActionListener(new ActionListener() {
+			    @Override
+			    public void actionPerformed(ActionEvent e) {
+				JOptionPane pane = getOptionPane((JComponent)e.getSource());
+				pane.setValue(cancel);
+			    }
+			});
 
-	            @Override
-	            public void insertUpdate(DocumentEvent e) {
-	                update();
-	            }
+			final JTextField field = new JTextField(10);
 
-	            @Override
-	            public void removeUpdate(DocumentEvent e) {
-	                update();
-	            }
+			final JTextField field2 = new JTextField(10);
 
-	            @Override
-	            public void changedUpdate(DocumentEvent e) {
-	                update();
-	            }
-	        });
-	        
-	        field2.getDocument().addDocumentListener(new DocumentListener() {
-	            protected void update() {
-	                okay.setEnabled(field.getText().length() > 0 && field2.getText().length() > 0);
-	            }
+			field.getDocument().addDocumentListener(new DocumentListener() {
+			    protected void update() {
+				okay.setEnabled(field.getText().length() > 0 && field2.getText().length() > 0);
+			    }
 
-	            @Override
-	            public void insertUpdate(DocumentEvent e) {
-	                update();
-	            }
+			    @Override
+			    public void insertUpdate(DocumentEvent e) {
+				update();
+			    }
 
-	            @Override
-	            public void removeUpdate(DocumentEvent e) {
-	                update();
-	            }
+			    @Override
+			    public void removeUpdate(DocumentEvent e) {
+				update();
+			    }
 
-	            @Override
-	            public void changedUpdate(DocumentEvent e) {
-	                update();
-	            }
-	        });
-	        
-	        Object[] message = {
-	        		j, field,
-	        		j1, field2,
-	        };
-		    
-	        int value = JOptionPane.showOptionDialog(
-	        	     null,
-	        	     message,
-	        	     "CHANGE VALUE",
-	        	     JOptionPane.YES_NO_OPTION, 
-	        	     JOptionPane.QUESTION_MESSAGE, 
-	        	     null, 
-	        	     new Object[]{okay, cancel}, 
-	        	     okay);
-		    if (value == 0) {
+			    @Override
+			    public void changedUpdate(DocumentEvent e) {
+				update();
+			    }
+			});
+
+			field2.getDocument().addDocumentListener(new DocumentListener() {
+			    protected void update() {
+				okay.setEnabled(field.getText().length() > 0 && field2.getText().length() > 0);
+			    }
+
+			    @Override
+			    public void insertUpdate(DocumentEvent e) {
+				update();
+			    }
+
+			    @Override
+			    public void removeUpdate(DocumentEvent e) {
+				update();
+			    }
+
+			    @Override
+			    public void changedUpdate(DocumentEvent e) {
+				update();
+			    }
+			});
+
+			Object[] message = {
+					j, field,
+					j1, field2,
+			};
+
+			int value = JOptionPane.showOptionDialog(
+				     null,
+				     message,
+				     "INSERT ASSIGNMENTS",
+				     JOptionPane.YES_NO_OPTION, 
+				     JOptionPane.QUESTION_MESSAGE, 
+				     null, 
+				     new Object[]{okay, cancel}, 
+				     okay);
+		        if (value == 0) {
 			    String newAssignName = field.getText();
 			    String newAssignMark = field2.getText();
 			    int newAMark = Integer.parseInt(newAssignMark);
@@ -275,4 +278,18 @@ public class InsertAssignment2 {
 						e.printStackTrace();
 					}
 	}}}
+	
+	public class backB implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			frame.setVisible(false);
+			new InsertAssignment(user, name, pswrd, f);
+			System.out.println("BACK CLICKED!");
+		}
+	}
+	
+	public class cancelB implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			frame.setVisible(false);
+		}
+	}
 }
