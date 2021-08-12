@@ -34,6 +34,7 @@ public class InsertAssignment2 {
 	okClick ok = new okClick();
 	backB back = new backB();
 	cancelB c = new cancelB();
+        int newAMark;
 	
 	protected JOptionPane getOptionPane(JComponent parent) {
 	     JOptionPane pane = null;
@@ -240,7 +241,12 @@ public class InsertAssignment2 {
 		        if (value == 0) {
 			    String newAssignName = field.getText();
 			    String newAssignMark = field2.getText();
-			    int newAMark = Integer.parseInt(newAssignMark);
+			    try {
+				    newAMark = Integer.parseInt(newAssignMark);
+			    } catch(NumberFormatException e) {
+		    	    JOptionPane.showMessageDialog(null, "Input is not a number",
+		    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
+		    	    }
 				try {
 			           Connection connection = DriverManager.getConnection(url, username, password);
 			           String sql1 = "SELECT MAX(assign_id) as MAXID FROM assignments WHERE course_name = ?";
