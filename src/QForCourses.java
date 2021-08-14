@@ -12,7 +12,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-public class qForCourses {
+public class QForCourses {
 	
     protected JOptionPane getOptionPane(JComponent parent) {
         JOptionPane pane = null;
@@ -24,7 +24,7 @@ public class qForCourses {
         return pane;
     }
 	
-	public int AskCourses() {
+	public int askCourses() {
 		JLabel label = new JLabel("How many courses do you want to calculate for?");
 		label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -110,7 +110,7 @@ public class qForCourses {
 		return 0;
 	} // all clear
 	
-	public String CourseName(int CourseNo) {
+	public String courseName(int CourseNo) {
 		String s = null;
 		JLabel label = new JLabel("For course " + CourseNo + ", please type in the course name: ");
 		label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
