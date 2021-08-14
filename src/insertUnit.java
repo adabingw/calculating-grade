@@ -19,7 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-public class insertUnit {
+public class InsertUnit {
 
 	JFrame frame, f;
 	JComboBox<String> comboBox, comboBox1;
@@ -27,13 +27,13 @@ public class insertUnit {
 	
 	String url = "jdbc:mysql://localhost:3306/grades";
 	String username = "root";
-	String password = " ";
+	String password = "root";
 	int id, u_id;
 	String courseName;
 	String[] unitNames;
 	okClick ok = new okClick();
 	cancelB cancel = new cancelB();
-	int uF, uW;
+    int uF, uW;
 	
 	protected JOptionPane getOptionPane(JComponent parent) {
 	     JOptionPane pane = null;
@@ -45,7 +45,7 @@ public class insertUnit {
 	     return pane;
 	}
 	
-	public insertUnit(String user, String name, String pswrd, JFrame f) {
+	public InsertUnit(String user, String name, String pswrd, JFrame f) {
 		this.user = user;
 		this.name = name;
 		this.pswrd = pswrd;
@@ -88,7 +88,7 @@ public class insertUnit {
 		panel.add(cancelButton);
 		
 		try {
-	           	   Connection connection = DriverManager.getConnection(url, username, password);
+	           Connection connection = DriverManager.getConnection(url, username, password);
 		 	   String sql = "SELECT MAX(course_id) as MAXID FROM course";
 		 	   PreparedStatement statement = connection.prepareStatement(sql);
 		 	   
@@ -131,166 +131,169 @@ public class insertUnit {
 			String coursePick = comboBox.getSelectedItem().toString();
 			System.out.println(coursePick);
 			
-		    	JLabel j = new JLabel("Enter new unit name: ");
+		    JLabel j = new JLabel("Enter new unit name: ");
 			j.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 			
-		    	JLabel j1 = new JLabel("Enter unit weight: ");
+		    JLabel j1 = new JLabel("Enter unit weight: ");
 			j1.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 			
-		    	JLabel j2 = new JLabel("Enter unit final: ");
+		    JLabel j2 = new JLabel("Enter unit final: ");
 			j2.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		    
-	        	final JButton okay = new JButton("Ok");
-			okay.setBackground(Color.WHITE);
-			okay.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-			okay.addActionListener(new ActionListener() {
-			    @Override
-			    public void actionPerformed(ActionEvent e) {
-				JOptionPane pane = getOptionPane((JComponent)e.getSource());
-				pane.setValue(okay);
-			    }
-			});
-			okay.setEnabled(false);
+	        final JButton okay = new JButton("Ok");
+	        okay.setBackground(Color.WHITE);
+	        okay.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+	        okay.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                JOptionPane pane = getOptionPane((JComponent)e.getSource());
+	                pane.setValue(okay);
+	            }
+	        });
+	        okay.setEnabled(false);
+	        
+	        final JButton cancel = new JButton("Cancel");
+	        cancel.setBackground(Color.WHITE);
+	        cancel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+	        cancel.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                JOptionPane pane = getOptionPane((JComponent)e.getSource());
+	                pane.setValue(cancel);
+	            }
+	        });
 
-			final JButton cancel = new JButton("Cancel");
-			cancel.setBackground(Color.WHITE);
-			cancel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-			cancel.addActionListener(new ActionListener() {
-			    @Override
-			    public void actionPerformed(ActionEvent e) {
-				JOptionPane pane = getOptionPane((JComponent)e.getSource());
-				pane.setValue(cancel);
-			    }
-			});
+	        final JTextField field = new JTextField(10);
+	        final JTextField field1 = new JTextField(10);
+	        final JTextField field2 = new JTextField(10);
+	        	        
+	        field.getDocument().addDocumentListener(new DocumentListener() {
+	            protected void update() {
+	                okay.setEnabled(field.getText().length() > 0 && field1.getText().length() > 0 && field2.getText().length() > 0);
+	            }
 
-			final JTextField field = new JTextField(10);
-			final JTextField field1 = new JTextField(10);
-			final JTextField field2 = new JTextField(10);
+	            @Override
+	            public void insertUpdate(DocumentEvent e) {
+	                update();
+	            }
 
-			field.getDocument().addDocumentListener(new DocumentListener() {
-			    protected void update() {
-				okay.setEnabled(field.getText().length() > 0 && field1.getText().length() > 0 && field2.getText().length() > 0);
-			    }
+	            @Override
+	            public void removeUpdate(DocumentEvent e) {
+	                update();
+	            }
 
-			    @Override
-			    public void insertUpdate(DocumentEvent e) {
-				update();
-			    }
+	            @Override
+	            public void changedUpdate(DocumentEvent e) {
+	                update();
+	            }
+	        });
+	        
+	        field1.getDocument().addDocumentListener(new DocumentListener() {
+	            protected void update() {
+	                okay.setEnabled(field.getText().length() > 0 && field1.getText().length() > 0 && field2.getText().length() > 0);
+	            }
 
-			    @Override
-			    public void removeUpdate(DocumentEvent e) {
-				update();
-			    }
+	            @Override
+	            public void insertUpdate(DocumentEvent e) {
+	                update();
+	            }
 
-			    @Override
-			    public void changedUpdate(DocumentEvent e) {
-				update();
-			    }
-			});
+	            @Override
+	            public void removeUpdate(DocumentEvent e) {
+	                update();
+	            }
 
-			field1.getDocument().addDocumentListener(new DocumentListener() {
-			    protected void update() {
-				okay.setEnabled(field.getText().length() > 0 && field1.getText().length() > 0 && field2.getText().length() > 0);
-			    }
+	            @Override
+	            public void changedUpdate(DocumentEvent e) {
+	                update();
+	            }
+	        });
+	        
+	        field2.getDocument().addDocumentListener(new DocumentListener() {
+	            protected void update() {
+	                okay.setEnabled(field.getText().length() > 0 && field1.getText().length() > 0 && field2.getText().length() > 0);
+	            }
 
-			    @Override
-			    public void insertUpdate(DocumentEvent e) {
-				update();
-			    }
+	            @Override
+	            public void insertUpdate(DocumentEvent e) {
+	                update();
+	            }
 
-			    @Override
-			    public void removeUpdate(DocumentEvent e) {
-				update();
-			    }
+	            @Override
+	            public void removeUpdate(DocumentEvent e) {
+	                update();
+	            }
 
-			    @Override
-			    public void changedUpdate(DocumentEvent e) {
-				update();
-			    }
-			});
-
-			field2.getDocument().addDocumentListener(new DocumentListener() {
-			    protected void update() {
-				okay.setEnabled(field.getText().length() > 0 && field1.getText().length() > 0 && field2.getText().length() > 0);
-			    }
-
-			    @Override
-			    public void insertUpdate(DocumentEvent e) {
-				update();
-			    }
-
-			    @Override
-			    public void removeUpdate(DocumentEvent e) {
-				update();
-			    }
-
-			    @Override
-			    public void changedUpdate(DocumentEvent e) {
-				update();
-			    }
-			});
-
-			Object[] message = {
-					j, field,
-					j1, field1,
-					j2, field2,
-			};
-
-			int value = JOptionPane.showOptionDialog(
-				     null,
-				     message,
-				     "INSERT UNIT",
-				     JOptionPane.YES_NO_OPTION, 
-				     JOptionPane.QUESTION_MESSAGE, 
-				     null, 
-				     new Object[]{okay, cancel}, 
-				     okay);
-		         if (value == 0) {
-				    String newUnitName = field.getText();
-				    String newUnitW = field1.getText();
-				    String newUnitFinal = field2.getText();
-					try {
-						    uF = Integer.parseInt(newUnitFinal);
-						    uW = Integer.parseInt(newUnitW);
-					} catch(NumberFormatException e) {
-					    JOptionPane.showMessageDialog(null, "Input is not a number",
-						      "ERROR", JOptionPane.ERROR_MESSAGE);
-					}
-					try {
-					   Connection connection = DriverManager.getConnection(url, username, password);
-					   String sql1 = "SELECT MAX(unit_id) as MAXID1 FROM unit WHERE course_name = ?";
-						   PreparedStatement statement1 = connection.prepareStatement(sql1);
-						   statement1.setString(1, coursePick);
-
-						   String sql4 = "SELECT course_id FROM course WHERE course_name = ?";
-						   PreparedStatement statement4 = connection.prepareStatement(sql4);
-						   statement4.setString(1, coursePick);
-
-						   ResultSet rs1 = statement1.executeQuery();
-						   ResultSet rs4 = statement4.executeQuery();
-
-						   while(rs1.next() && rs4.next()) {
-							   id = rs4.getInt("course_id");
-							   u_id = rs1.getInt("MAXID1");
-							   System.out.println("MAX unit id is " + u_id);
-
-							   String sql3 = "INSERT INTO unit (course_id, course_name, user_id, unit_id, unit_name, unit_final, unit_w) VALUES (?, ?, ?, ?, ?, ?, ?)";
-							   PreparedStatement statement3 = connection.prepareStatement(sql3);
-							   statement3.setInt(1, id);
-							   statement3.setString(2, coursePick);
-							   statement3.setString(3, user);
-							   statement3.setInt(4, u_id+1);
-							   statement3.setString(5, newUnitName);
-							   statement3.setInt(6, uF);
-							   statement3.setInt(7, uW);
-
-							   int rows = statement3.executeUpdate();
-
-							   if (rows > 0) {
-								   f.setVisible(false);
-								   new ViewDatabase(user, name, pswrd);
-							   }
-						   }
+	            @Override
+	            public void changedUpdate(DocumentEvent e) {
+	                update();
+	            }
+	        });
+	        
+	        Object[] message = {
+	        		j, field,
+	        		j1, field1,
+	        		j2, field2,
+	        };
+		    
+	        int value = JOptionPane.showOptionDialog(
+	        	     null,
+	        	     message,
+	        	     "INSERT UNIT",
+	        	     JOptionPane.YES_NO_OPTION, 
+	        	     JOptionPane.QUESTION_MESSAGE, 
+	        	     null, 
+	        	     new Object[]{okay, cancel}, 
+	        	     okay);
+		    if (value == 0) {
+			    String newUnitName = field.getText();
+			    String newUnitW = field1.getText();
+			    String newUnitFinal = field2.getText();
+			    try {
+				    uF = Integer.parseInt(newUnitFinal);
+				    uW = Integer.parseInt(newUnitW);
+				} catch(NumberFormatException e) {
+		    	    JOptionPane.showMessageDialog(null, "Input is not a number",
+		    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
+		    	}
+				try {
+			           Connection connection = DriverManager.getConnection(url, username, password);
+			           String sql1 = "SELECT MAX(unit_id) as MAXID1 FROM unit WHERE course_name = ?";
+				 	   PreparedStatement statement1 = connection.prepareStatement(sql1);
+				 	   statement1.setString(1, coursePick);
+				 	   
+				 	   String sql4 = "SELECT course_id FROM course WHERE course_name = ?";
+				 	   PreparedStatement statement4 = connection.prepareStatement(sql4);
+				 	   statement4.setString(1, coursePick);
+				 	   
+				 	   ResultSet rs1 = statement1.executeQuery();
+				 	   ResultSet rs4 = statement4.executeQuery();
+				 	   
+				 	   while(rs1.next() && rs4.next()) {
+				 		   id = rs4.getInt("course_id");
+				 		   u_id = rs1.getInt("MAXID1");
+				 		   if (u_id < 100) {
+				 			   u_id = 99;
+				 		   }
+				 		   System.out.println("MAX unit id is " + u_id);
+				 		   
+					 	   String sql3 = "INSERT INTO unit (course_id, course_name, user_id, unit_id, unit_name, unit_final, unit_w) VALUES (?, ?, ?, ?, ?, ?, ?)";
+					 	   PreparedStatement statement3 = connection.prepareStatement(sql3);
+					 	   statement3.setInt(1, id);
+					 	   statement3.setString(2, coursePick);
+					 	   statement3.setString(3, user);
+					 	   statement3.setInt(4, u_id+1);
+					 	   statement3.setString(5, newUnitName);
+					 	   statement3.setInt(6, uF);
+					 	   statement3.setInt(7, uW);
+					 	   
+					 	   int rows = statement3.executeUpdate();
+					 	   
+					 	   if (rows > 0) {
+					 		   f.setVisible(false);
+					 		   new ViewDatabase(user, name, pswrd, null);
+					 	   }
+				 	   }
 				
 					} catch (SQLException e) {
 						System.out.println("& i oop");
