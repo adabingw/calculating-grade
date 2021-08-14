@@ -1,49 +1,55 @@
+import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 public class SignUpUser {
 	
-	protected JOptionPane getOptionPane(JComponent parent) {
-        	JOptionPane pane = null;
-        	if (!(parent instanceof JOptionPane)) {
-            		pane = getOptionPane((JComponent)parent.getParent());
-        	} else {
-            		pane = (JOptionPane) parent;
-        	}
-        	return pane;
-    	}
-	
+    protected JOptionPane getOptionPane(JComponent parent) {
+        JOptionPane pane = null;
+        if (!(parent instanceof JOptionPane)) {
+            pane = getOptionPane((JComponent)parent.getParent());
+        } else {
+            pane = (JOptionPane) parent;
+        }
+        return pane;
+    }
 	
 	public SignUpUser() {
 		
 		String url = "jdbc:mysql://localhost:3306/grades";
 		String username = "root";
-		String password = " ";
+		String password = "root";
 		
-        	JPasswordField jpf = new JPasswordField(10);
- 	    	JLabel jl = new JLabel("Password: ");
+        JPasswordField jpf = new JPasswordField(10);
+ 	    JLabel jl = new JLabel("Password: ");
 		jl.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		
 		JPasswordField jpf2 = new JPasswordField(10);
- 	    	JLabel jl2 = new JLabel("Confirm password: ");
+ 	    JLabel jl2 = new JLabel("Confirm password: ");
 		jl2.setFont(new Font("Times New Roman", Font.PLAIN, 15));
  	    
 		JTextField username1 = new JTextField(10);
-	    	JLabel label = new JLabel("Username: ");
+	    JLabel label = new JLabel("Username: ");
 		label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		
 		JTextField name = new JTextField(10);
-	    	JLabel label1 = new JLabel("Name: ");
+	    JLabel label1 = new JLabel("Name: ");
 		label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		
 		Object[] message = {
@@ -52,7 +58,7 @@ public class SignUpUser {
 				jl, jpf,
 				jl2, jpf2,
 		};
-	    
+		
         final JButton okay = new JButton("Ok");
         okay.setBackground(Color.WHITE);
         okay.setFont(new Font("Times New Roman", Font.PLAIN, 15));
@@ -201,7 +207,7 @@ public class SignUpUser {
 						System.out.println("A row has been inserted for sign up.");
 					}
 		        	
-		    	   new userMain(user, profileName, pswrd);
+		    	   new UserMain(user, profileName, pswrd, null);
 		    	   System.out.println("userMain called!");
 		        } else if (rs.next()) {
 		           JLabel l = new JLabel("Username has already been taken.");
