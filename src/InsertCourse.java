@@ -127,7 +127,7 @@ public class InsertCourse {
 		 	   
 		 	   if (rows > 0) {
 		 		   f.setVisible(false);
-		 		   new ViewDatabase(user_id, name, pswrd);
+		 		   new ViewDatabase(user_id, name, pswrd, null);
 		 	   }
 		
 			} catch (SQLException e) {
