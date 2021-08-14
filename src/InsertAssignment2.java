@@ -28,13 +28,13 @@ public class InsertAssignment2 {
 	String url = "jdbc:mysql://localhost:3306/grades";
 	String username = "root";
 	String password = "root";
-	int id, aID, cID;
+	int id, aID, cID, uID;
 	String[] unitNames;
 	String courseName;
 	okClick ok = new okClick();
 	backB back = new backB();
 	cancelB c = new cancelB();
-        int newAMark;
+    int newAMark;
 	
 	protected JOptionPane getOptionPane(JComponent parent) {
 	     JOptionPane pane = null;
@@ -86,7 +86,7 @@ public class InsertAssignment2 {
 		cancelButton.setBackground(Color.WHITE);
 		cancelButton.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		cancelButton.setBounds(286, 116, 85, 21);
-		cancelButton.addActionListener(cancel);
+		cancelButton.addActionListener(c);
 		panel.add(cancelButton);
 		
 		JButton btnBack = new JButton("BACK");
@@ -139,7 +139,7 @@ public class InsertAssignment2 {
 		
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    	frame.setResizable(false);
+	    frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
@@ -149,96 +149,96 @@ public class InsertAssignment2 {
 			frame.setVisible(false);
 			String unitPick = comboBox.getSelectedItem().toString();
 			
-		    	JLabel j = new JLabel("Enter new assignment name: ");
+		    JLabel j = new JLabel("Enter new assignment name: ");
 			j.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 			
 			JLabel j1 = new JLabel("Enter new assignment mark: ");
 			j1.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		    
-			final JButton okay = new JButton("Ok");
-			okay.setBackground(Color.WHITE);
-			okay.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-			okay.addActionListener(new ActionListener() {
-			    @Override
-			    public void actionPerformed(ActionEvent e) {
-				JOptionPane pane = getOptionPane((JComponent)e.getSource());
-				pane.setValue(okay);
-			    }
-			});
-			okay.setEnabled(false);
+	        final JButton okay = new JButton("Ok");
+	        okay.setBackground(Color.WHITE);
+	        okay.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+	        okay.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                JOptionPane pane = getOptionPane((JComponent)e.getSource());
+	                pane.setValue(okay);
+	            }
+	        });
+	        okay.setEnabled(false);
+	        
+	        final JButton cancel = new JButton("Cancel");
+	        cancel.setBackground(Color.WHITE);
+	        cancel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+	        cancel.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                JOptionPane pane = getOptionPane((JComponent)e.getSource());
+	                pane.setValue(cancel);
+	            }
+	        });
 
-			final JButton cancel = new JButton("Cancel");
-			cancel.setBackground(Color.WHITE);
-			cancel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-			cancel.addActionListener(new ActionListener() {
-			    @Override
-			    public void actionPerformed(ActionEvent e) {
-				JOptionPane pane = getOptionPane((JComponent)e.getSource());
-				pane.setValue(cancel);
-			    }
-			});
+	        final JTextField field = new JTextField(10);
+	        
+	        final JTextField field2 = new JTextField(10);
+	        
+	        field.getDocument().addDocumentListener(new DocumentListener() {
+	            protected void update() {
+	                okay.setEnabled(field.getText().length() > 0 && field2.getText().length() > 0);
+	            }
 
-			final JTextField field = new JTextField(10);
+	            @Override
+	            public void insertUpdate(DocumentEvent e) {
+	                update();
+	            }
 
-			final JTextField field2 = new JTextField(10);
+	            @Override
+	            public void removeUpdate(DocumentEvent e) {
+	                update();
+	            }
 
-			field.getDocument().addDocumentListener(new DocumentListener() {
-			    protected void update() {
-				okay.setEnabled(field.getText().length() > 0 && field2.getText().length() > 0);
-			    }
+	            @Override
+	            public void changedUpdate(DocumentEvent e) {
+	                update();
+	            }
+	        });
+	        
+	        field2.getDocument().addDocumentListener(new DocumentListener() {
+	            protected void update() {
+	                okay.setEnabled(field.getText().length() > 0 && field2.getText().length() > 0);
+	            }
 
-			    @Override
-			    public void insertUpdate(DocumentEvent e) {
-				update();
-			    }
+	            @Override
+	            public void insertUpdate(DocumentEvent e) {
+	                update();
+	            }
 
-			    @Override
-			    public void removeUpdate(DocumentEvent e) {
-				update();
-			    }
+	            @Override
+	            public void removeUpdate(DocumentEvent e) {
+	                update();
+	            }
 
-			    @Override
-			    public void changedUpdate(DocumentEvent e) {
-				update();
-			    }
-			});
-
-			field2.getDocument().addDocumentListener(new DocumentListener() {
-			    protected void update() {
-				okay.setEnabled(field.getText().length() > 0 && field2.getText().length() > 0);
-			    }
-
-			    @Override
-			    public void insertUpdate(DocumentEvent e) {
-				update();
-			    }
-
-			    @Override
-			    public void removeUpdate(DocumentEvent e) {
-				update();
-			    }
-
-			    @Override
-			    public void changedUpdate(DocumentEvent e) {
-				update();
-			    }
-			});
-
-			Object[] message = {
-					j, field,
-					j1, field2,
-			};
-
-			int value = JOptionPane.showOptionDialog(
-				     null,
-				     message,
-				     "INSERT ASSIGNMENTS",
-				     JOptionPane.YES_NO_OPTION, 
-				     JOptionPane.QUESTION_MESSAGE, 
-				     null, 
-				     new Object[]{okay, cancel}, 
-				     okay);
-		        if (value == 0) {
+	            @Override
+	            public void changedUpdate(DocumentEvent e) {
+	                update();
+	            }
+	        });
+	        
+	        Object[] message = {
+	        		j, field,
+	        		j1, field2,
+	        };
+		    
+	        int value = JOptionPane.showOptionDialog(
+	        	     null,
+	        	     message,
+	        	     "INSERT ASSIGNMENT",
+	        	     JOptionPane.YES_NO_OPTION, 
+	        	     JOptionPane.QUESTION_MESSAGE, 
+	        	     null, 
+	        	     new Object[]{okay, cancel}, 
+	        	     okay);
+		    if (value == 0) {
 			    String newAssignName = field.getText();
 			    String newAssignMark = field2.getText();
 			    try {
@@ -246,25 +246,41 @@ public class InsertAssignment2 {
 			    } catch(NumberFormatException e) {
 		    	    JOptionPane.showMessageDialog(null, "Input is not a number",
 		    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
-		    	    }
+		    	}
 				try {
 			           Connection connection = DriverManager.getConnection(url, username, password);
-			           String sql1 = "SELECT MAX(assign_id) as MAXID FROM assignments WHERE course_name = ?";
+			           
+				 	   String sql4 = "SELECT unit_id FROM unit WHERE unit_name = ?";
+				 	   PreparedStatement statement4 = connection.prepareStatement(sql4);
+				 	   statement4.setString(1, unitPick);
+				 	   
+				 	   ResultSet rs4 = statement4.executeQuery();
+				 	   
+				 	   while(rs4.next()) {
+				 		   uID = rs4.getInt("unit_id");
+				 		   System.out.println(uID);
+				 	   }
+			           
+			           String sql1 = "SELECT MAX(assign_id) as MAXID FROM assignments WHERE course_id = ? && unit_id = ?";
 				 	   PreparedStatement statement1 = connection.prepareStatement(sql1);
-				 	   statement1.setString(1, courseName);
+				 	   statement1.setInt(1, cID);
+				 	   statement1.setInt(2, uID);
 				 	   
 				 	   ResultSet rs1 = statement1.executeQuery();
 				 	   
 				 	   while(rs1.next()) {
 				 		   aID = rs1.getInt("MAXID");
-				 		   System.out.println(aID);
+				 		   if (aID < 1000) {
+				 			   aID = 999;
+				 		   }
+				 		   System.out.println("MAX A_ID IS " + aID);
 				 		   
 					 	   String sql3 = "INSERT INTO assignments (course_id, course_name, user_id, unit_id, unit_name, assign_name, assign_mark, assign_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 					 	   PreparedStatement statement3 = connection.prepareStatement(sql3);
 					 	   statement3.setInt(1, cID);
 					 	   statement3.setString(2, courseName);
 					 	   statement3.setString(3, user);
-					 	   statement3.setInt(4, id);
+					 	   statement3.setInt(4, uID);
 					 	   statement3.setString(5, unitPick);
 					 	   statement3.setString(6, newAssignName);
 					 	   statement3.setInt(7, newAMark);
@@ -275,7 +291,8 @@ public class InsertAssignment2 {
 					 	   
 					 	   if (rows > 0) {
 					 		   f.setVisible(false);
-					 		   new ViewDatabase(user, name, pswrd);
+					 		   String m = "Please press refresh to recalculate your grades.";
+					 		   new ViewDatabase(user, name, pswrd, m);
 					 	   }
 				 	   }
 				
@@ -283,7 +300,11 @@ public class InsertAssignment2 {
 						System.out.println("& i oop");
 						e.printStackTrace();
 					}
-	}}}
+		    } else {
+				JOptionPane.getRootFrame().dispose();   
+		    }
+		    }
+		}
 	
 	public class backB implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
@@ -298,4 +319,5 @@ public class InsertAssignment2 {
 			frame.setVisible(false);
 		}
 	}
+	
 }
