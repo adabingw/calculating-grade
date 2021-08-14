@@ -13,7 +13,7 @@ public class DeleteVal {
 	
 	String url = "jdbc:mysql://localhost:3306/grades";
 	String username = "root";
-	String password = " ";
+	String password = "root";
 	
 	public DeleteVal(int c, Object o, Object o1, Object o2, int tableNo, JFrame f, String user_id, String name, String pswrd) {
 		JLabel label = new JLabel("Are you sure?");
@@ -46,10 +46,12 @@ public class DeleteVal {
 		    	   statement2.setInt(1, i);
 		    	   
 					int rows2 = statement2.executeUpdate();
-	
+						
 					if (rows > 0 || rows1 > 0 || rows2 > 0) {
+						new SlideDown(i, 0, 0, tableNo);
 						f.setVisible(false);
-						new ViewDatabase(user_id, name, pswrd);
+				 		String m = "Please press refresh to recalculate your grades.";
+				 		new ViewDatabase(user_id, name, pswrd, m);
 						System.out.println("DELETEVAL");
 					}
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -71,9 +73,10 @@ public class DeleteVal {
 					int rows1 = statement1.executeUpdate();
 	
 					if (rows > 0) {
+						new SlideDown(i, x, 0, tableNo);
 						f.setVisible(false);
-						new ViewDatabase(user_id, name, pswrd);
-						System.out.println("DELETEVAL");
+ 			 		    String m = "Please press refresh to recalculate your grades.";
+				 		new ViewDatabase(user_id, name, pswrd, m);
 					}
 					
 					if (rows1 > 0) {
@@ -93,15 +96,17 @@ public class DeleteVal {
 					int rows = statement.executeUpdate();
 	
 					if (rows > 0) {
+						new SlideDown(i, x, j, tableNo);
 						f.setVisible(false);
-						new ViewDatabase(user_id, name, pswrd);
-						System.out.println("DELETEVAL");
+				 		String m = "Please press refresh to recalculate your grades.";
+				 		new ViewDatabase(user_id, name, pswrd, m);
+				 		System.out.println("DELETEVAL");
 					}
                }
                
-		 } catch (SQLException e) {
-			System.out.println("& i oop");
-			e.printStackTrace();
+			 } catch (SQLException e) {
+				System.out.println("& i oop");
+				e.printStackTrace();
 	        }
 			
 		}
