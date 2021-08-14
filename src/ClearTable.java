@@ -1,3 +1,5 @@
+/* class no long in use
+
 import java.awt.Font;
 import java.sql.Connection;
 import java.sql.DriverManager;
