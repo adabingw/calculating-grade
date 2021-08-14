@@ -12,7 +12,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-public class qForUnits {
+public class QForUnits {
 	
     protected JOptionPane getOptionPane(JComponent parent) {
         JOptionPane pane = null;
@@ -24,7 +24,7 @@ public class qForUnits {
         return pane;
     }
 	
-	public int AskUnits(String courseName) {
+	public int askUnits(String courseName) {
 		JLabel label = new JLabel("How many units are in this course?");
 		label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -110,7 +110,7 @@ public class qForUnits {
 		return 0;
 	} // all clear
 	
-	public String[] Unitw(int UnitNo, String courseName) {
+	public String[] unitw(int UnitNo, String courseName) {
 			String[] unitInfo = new String[2];
 			JLabel l = new JLabel("For unit " + UnitNo + ", please type in the weighting (discard the percent sign) and the name: ");
 			l.setFont(new Font("Times New Roman", Font.PLAIN, 15));
@@ -216,7 +216,7 @@ public class qForUnits {
 	        return unitInfo;
 	} // all clear
 	
-	public int AskAssign(int UnitNo, String courseName) {
+	public int askAssign(int UnitNo, String courseName) {
 		JLabel label = new JLabel("How many assignments are in this unit?");
 		label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -302,7 +302,7 @@ public class qForUnits {
 		return 0;
 	} // all clear
 	
-	public String[][] InputAssign(int Assign, int UnitNo, String courseName) {
+	public String[][] inputAssign(int Assign, int UnitNo, String courseName) {
 
 		System.out.println("Assign is " + Assign); // system check
 		String[][] Assignments = new String[2][Assign]; 
@@ -408,7 +408,7 @@ public class qForUnits {
 		return Assignments;
 	}
 	
-	public int InputUnitFinal(int UnitNo, String courseName) {
+	public int inputUnitFinal(int UnitNo, String courseName) {
 		JLabel label = new JLabel("Input your unit final mark: ");
 		label.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
