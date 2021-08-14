@@ -22,8 +22,8 @@ public class ChangeVal {
 	
 	String url = "jdbc:mysql://localhost:3306/grades";
 	String username = "root";
-	String password = " ";
-	int i, x, w;
+	String password = "root";
+	int i, x, w, z;
 	
 	protected JOptionPane getOptionPane(JComponent parent) {
 	     JOptionPane pane = null;
@@ -128,7 +128,7 @@ public class ChangeVal {
 	
 					if (rows > 0 && rows1 > 0 && rows2 > 0) {
 						f.setVisible(false);
-						new ViewDatabase(user_id, name, pswrd);
+						new ViewDatabase(user_id, name, pswrd, null);
 						System.out.println("CHANGED COURSE NAME!");
 					}
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -152,7 +152,8 @@ public class ChangeVal {
 		
 						if (rows > 0) {
 							f.setVisible(false);
-							new ViewDatabase(user_id, name, pswrd);
+							String m = "Please press refresh to recalculate your grades.";
+							new ViewDatabase(user_id, name, pswrd, m);
 							System.out.println("CHANGED COURSE NAME!");
 						}
             	   } else if (c == 3) {
@@ -174,7 +175,8 @@ public class ChangeVal {
 		
 						if (rows > 0) {
 							f.setVisible(false);
-							new ViewDatabase(user_id, name, pswrd);
+							String m = "Please press refresh to recalculate your grades.";
+							new ViewDatabase(user_id, name, pswrd, m);
 							System.out.println("CHANGED COURSE NAME!");
 						}
             	   } else if (c == 5) {
@@ -202,7 +204,7 @@ public class ChangeVal {
 		
 						if (rows > 0 && rows1 > 0) {
 							f.setVisible(false);
-							new ViewDatabase(user_id, name, pswrd);
+							new ViewDatabase(user_id, name, pswrd, null);
 							System.out.println("CHANGED COURSE NAME!");
 						}
             	   }
@@ -213,6 +215,7 @@ public class ChangeVal {
                   		   w = Integer.parseInt(newName);
                   		   i = Integer.valueOf((String) o);
                   		   x = Integer.valueOf((String) o1);
+                  		   z = Integer.valueOf((String) o2);
               		   } catch(NumberFormatException e) {
              	    	    JOptionPane.showMessageDialog(null, "Input is not a number",
         	    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -222,18 +225,21 @@ public class ChangeVal {
 			    	   statement.setInt(1, w);
 			    	   statement.setInt(2, i);
 			    	   statement.setInt(3, x);
+			    	   statement.setInt(4, z);
 			    	   
 						int rows = statement.executeUpdate();
 		
 						if (rows > 0) {
-							f.setVisible(false);
-							new ViewDatabase(user_id, name, pswrd);
+							f.setVisible(false);					 		   
+							String m = "Please press refresh to recalculate your grades.";
+							new ViewDatabase(user_id, name, pswrd, m);
 							System.out.println("CHANGED COURSE NAME!");
 						}
             	   } else if (c == 6) {
                 	  try {
                  		   i = Integer.valueOf((String) o);
                  		   x = Integer.valueOf((String) o1);
+                  		   z = Integer.valueOf((String) o2);
              		   } catch(NumberFormatException e) {
             	    	    JOptionPane.showMessageDialog(null, "Input is not a number",
        	    	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -243,13 +249,14 @@ public class ChangeVal {
 			    	   statement.setString(1, newName);
 			    	   statement.setInt(2, i);
 			    	   statement.setInt(3, x);
+			    	   statement.setInt(4, z);
 			    	   
 						int rows = statement.executeUpdate();
 		
 						if (rows > 0) {
 							f.setVisible(false);
-							new ViewDatabase(user_id, name, pswrd);
-							System.out.println("CHANGED COURSE NAME!");
+					 		   new ViewDatabase(user_id, name, pswrd, null);
+					 		   System.out.println("CHANGED COURSE NAME!");
 						}
             	   }
                }
