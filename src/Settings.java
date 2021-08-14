@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import javax.swing.Box;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -19,6 +20,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.SwingConstants;
 //import javax.swing.JOptionPane;
 
@@ -26,7 +29,7 @@ public class Settings {
 	
 	String url = "jdbc:mysql://localhost:3306/grades";
 	String username = "root";
-	String password = " ";
+	String password = "root";
 	
 	JFrame frame;
 	
@@ -38,15 +41,15 @@ public class Settings {
 	backButton b = new backButton();
 	deleteAcc da = new deleteAcc();
 	
-	protected JOptionPane getOptionPane(JComponent parent) {
-		JOptionPane pane = null;
-		if (!(parent instanceof JOptionPane)) {
-	    		pane = getOptionPane((JComponent)parent.getParent());
-		} else {
-	    		pane = (JOptionPane) parent;
-		}
-		return pane;
-    	}
+    protected JOptionPane getOptionPane(JComponent parent) {
+        JOptionPane pane = null;
+        if (!(parent instanceof JOptionPane)) {
+            pane = getOptionPane((JComponent)parent.getParent());
+        } else {
+            pane = (JOptionPane) parent;
+        }
+        return pane;
+    }
 	
 	public Settings(String user_id, String name, String pswrd) {
 		this.user_id = user_id;
@@ -262,7 +265,7 @@ public class Settings {
 						e.printStackTrace();
 			        }
 		       frame.setVisible(false);
-		       new userMain(user_id, newName, pswrd);
+		       new UserMain(user_id, newName, pswrd, null);
 		   } else if (value == 1) {
 	        	JOptionPane.getRootFrame().dispose();   
 	        } else System.exit(0);
@@ -367,7 +370,7 @@ public class Settings {
 						e.printStackTrace();
 			        }
 		       frame.setVisible(false);
-		       new userMain(newUser, name, pswrd);
+		       new UserMain(newUser, name, pswrd, null);
 		   } else if (value == 1) {
 	        	JOptionPane.getRootFrame().dispose();   
 	        } else System.exit(0);
@@ -502,7 +505,7 @@ public class Settings {
 					e.printStackTrace();
 		        }
 	       frame.setVisible(false);
-	       new userMain(user_id, name, newP);
+	       new UserMain(user_id, name, newP, null);
 		}
 			
 		}
@@ -511,10 +514,11 @@ public class Settings {
 	public class backButton implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
 			frame.setVisible(false);
-			new userMain(user_id, name, pswrd);
+			new UserMain(user_id, name, pswrd, null);
 			System.out.println("BACK CLICKED!");
 		}
 	}
+	
 	
 	public class deleteAcc implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
@@ -560,4 +564,5 @@ public class Settings {
 			}
 		}
 	}
+	
 }
