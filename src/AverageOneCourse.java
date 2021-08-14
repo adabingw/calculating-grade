@@ -7,27 +7,27 @@ import java.util.stream.IntStream;
 
 import javax.swing.JOptionPane;
 
-public class averageOneCourse {
+public class AverageOneCourse {
 	
 	int sum;
 	int UnitWeightLOL;
 	int assign;
 	String[] unitInfo = new String[2];
 	
-	public averageOneCourse(String courseName, boolean guest, String user_id, String name, boolean end, String pswrd) {
+	public AverageOneCourse(String courseName, boolean guest, String user_id, String name, boolean end, String pswrd) {
 		String url = "jdbc:mysql://localhost:3306/grades";
 		String username = "root";
-		String password = "Will@3229967163";
+		String password = "root";
 	
-		qForUnits Q = new qForUnits();
-		int NUnits = Q.AskUnits(courseName); 
-		System.out.println("Number of Units: " + NUnits); // system check
-		int[] unitUNweighted = new int[NUnits];
-		int[] unitweighted = new int[NUnits]; 
-		int[] Weights = new int[NUnits];
+		QForUnits q = new QForUnits();
+		int nUnits = q.askUnits(courseName); 
+		System.out.println("Number of Units: " + nUnits); // system check
+		int[] unitUNweighted = new int[nUnits];
+		int[] unitweighted = new int[nUnits]; 
+		int[] weights = new int[nUnits];
 		
-		for (int i = 0; i < NUnits; i++) {
-			String[] unitInfo = Q.Unitw(i+1, courseName);
+		for (int i = 0; i < nUnits; i++) {
+			String[] unitInfo = q.unitw(i+1, courseName);
 		    try {
 		    	UnitWeightLOL = Integer.parseInt(unitInfo[0]);
 				System.out.println("Unit weight is " + UnitWeightLOL + "%"); // system check
@@ -42,18 +42,18 @@ public class averageOneCourse {
 	    	    System.exit(0);
 	    	 }
 		    
-			Weights[i] = UnitWeightLOL;
-			System.out.println("LALALA WEIGHTS[I] IS" + Weights[i]);
-			int NumberofAssignments = Q.AskAssign(i + 1, courseName); 
-			int[] assigns = new int[NumberofAssignments];
+		    weights[i] = UnitWeightLOL;
+			System.out.println("LALALA WEIGHTS[I] IS" + weights[i]);
+			int numberofAssignments = q.askAssign(i + 1, courseName); 
+			int[] assigns = new int[numberofAssignments];
 			String assignN;
-			String[] assignName = new String[NumberofAssignments];
-			String[][] AssignmentArray = Q.InputAssign(NumberofAssignments, i + 1, courseName);
+			String[] assignName = new String[numberofAssignments];
+			String[][] assignmentArray = q.inputAssign(numberofAssignments, i + 1, courseName);
 				
 		    try {
-		    	for(int j = 0; j < NumberofAssignments; j++) {
-			    	assign = Integer.parseInt(AssignmentArray[0][j]);
-			    	assignN = AssignmentArray[1][j];
+		    	for(int j = 0; j < numberofAssignments; j++) {
+			    	assign = Integer.parseInt(assignmentArray[0][j]);
+			    	assignN = assignmentArray[1][j];
 			    	assigns[j] = assign;
 			    	assignName[j] = assignN;
 		    	}
@@ -70,11 +70,11 @@ public class averageOneCourse {
 	    	 }
 			
 			int sumOfAssignments = IntStream.of(assigns).sum();
-			int averageAssignments = (int) Math.round((sumOfAssignments / NumberofAssignments) * 0.7);
-			int InputedUFinal = Q.InputUnitFinal(i + 1, courseName);
+			int averageAssignments = (int) Math.round((sumOfAssignments / numberofAssignments) * 0.7);
+			int InputedUFinal = q.inputUnitFinal(i + 1, courseName);
 			int UnitFinaleW = (int) Math.round(InputedUFinal * 0.3);
 			unitUNweighted[i] = (int) Math.round(averageAssignments + UnitFinaleW);
-			unitweighted[i] = (int) Math.round(unitUNweighted[i] * ((double) Weights[i]/100));
+			unitweighted[i] = (int) Math.round(unitUNweighted[i] * ((double) weights[i]/100));
 			
 			if (guest == false) {
 		
@@ -83,7 +83,7 @@ public class averageOneCourse {
 					String sql = "INSERT INTO unit (UNIT_ID, UNIT_W, UNIT_FINAL, UNIT_MARK, USER_ID, COURSE_NAME, UNIT_NAME) VALUES (?, ?, ?, ?, ?, ?, ?)";
 					PreparedStatement statement = connection.prepareStatement(sql);
 					statement.setInt(1, i + 100);
-					statement.setInt(2, Weights[i]);
+					statement.setInt(2, weights[i]);
 					statement.setInt(3, InputedUFinal);
 					statement.setInt(4, unitUNweighted[i]);
 					statement.setString(5, user_id);
@@ -105,7 +105,7 @@ public class averageOneCourse {
 					statement1.setString(5, courseName);
 					statement1.setString(6, unitInfo[1]);
 	
-					for (int j = 0; j < NumberofAssignments; j++) {
+					for (int j = 0; j < numberofAssignments; j++) {
 						statement1.setInt(1, 1000 + j);
 						statement1.setInt(3, assigns[j]);
 						statement1.setString(7, assignName[j]);
@@ -130,7 +130,7 @@ public class averageOneCourse {
 			}
 			}
 		sum = IntStream.of(unitweighted).sum();
-		double WeightSum = Arrays.stream(Weights).sum();
+		double WeightSum = Arrays.stream(weights).sum();
 		if (WeightSum != 100.0) {
 			JOptionPane.showMessageDialog(null, "Unit weights calculation error",
 	    	      "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -140,7 +140,7 @@ public class averageOneCourse {
 			JOptionPane.showMessageDialog(null, "The final mark for this course is: " + sum);
 		}
 		if (guest == false && end == true) {
-			new userMain(user_id, name, pswrd);
+			new UserMain(user_id, name, pswrd, null);
 		}
 	}
 	
