@@ -10,9 +10,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
 //import javax.swing.JOptionPane;
 
-public class userMain {	
+public class UserMain {	
 	
 	JFrame frame;
 
@@ -24,8 +25,10 @@ public class userMain {
 	String user_id;
 	String name;
 	String password;
+	String message;
 
-	public userMain(String username, String name, String password) {
+	public UserMain(String username, String name, String password, String message) {
+		this.message = message;
 		user_id = username;
 		this.name = name;
 		this.password = password;
@@ -115,23 +118,24 @@ public class userMain {
 	
 	public class OneCourseClick implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
-				frame.setVisible(false);
-				System.out.println("OCC CLICKED!");
-				new averageOneCourse(" ", false, user_id, name, true, password);
+			frame.setVisible(false);
+			System.out.println("OCC CLICKED!");
+			new AverageOneCourse(" ", false, user_id, name, true, password);
 		}
 	}
 	
 	public class AllCoursesClick implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
-				frame.setVisible(false);
-				System.out.println("ACC CLICKED!");
-				new averageAllCourses(false, user_id, name, password);
+			frame.setVisible(false);
+			System.out.println("ACC CLICKED!");
+			new AverageAllCourses(false, user_id, name, password);
 		}
 	}
 	
 	public class logoutClick implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
 			frame.dispose();
+			
 			System.out.println("LOGOUT CLICKED!");
 			
 		}
@@ -149,7 +153,8 @@ public class userMain {
 		public void actionPerformed(ActionEvent event) {
 			frame.dispose();
 			System.out.println("VIEW DATABASE CLICKED!");
-			new ViewDatabase(user_id);			
+			new ViewDatabase(user_id, name, password, message);			
 		}
 	}
 }
+
