@@ -48,7 +48,7 @@ public class ClearAll {
 				int rows1 = statement1.executeUpdate();
 				int rows2 = statement2.executeUpdate();
 				if (rows2 > 0 || rows1 > 0 || rows > 0) {
-					new ViewDatabase(user_id, name, pswrd);
+					new ViewDatabase(user_id, name, pswrd, null);
 					System.out.println("COURSE - COURSE_ID UPDATE SUCCESSFUL");
 					f.setVisible(false);
 				} else if (rows == 0 && rows1 == 0 && rows2 == 0) {
