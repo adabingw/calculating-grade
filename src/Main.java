@@ -1,4 +1,3 @@
-// import javax.swing.JOptionPane;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -10,9 +9,12 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
 import javax.swing.UIManager;
+import javax.swing.JOptionPane;
 
 public class Main {
 /*	public static void main (String[] args) {
@@ -132,7 +134,7 @@ public class Main {
 			if (JOptionPane.showConfirmDialog(null, label, null,
 			        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				frame.setVisible(false);
-				new averageOneCourse(" ", true, null, null, true, null);
+				new AverageOneCourse(" ", true, null, null, true, null);
 			} else {
 				JOptionPane.getRootFrame().dispose();   
 			}
@@ -147,7 +149,7 @@ public class Main {
 			if (JOptionPane.showConfirmDialog(null, label, null,
 			        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				frame.setVisible(false);
-				new averageAllCourses(true, null, null, null);
+				new AverageAllCourses(true, null, null, null);
 			} else {
 				JOptionPane.getRootFrame().dispose();   
 			}
